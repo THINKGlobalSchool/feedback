@@ -45,12 +45,17 @@
 		
   <div id="feedBackContent">
     <div style="padding:10px;">
-        
-      <h1 style="padding-bottom:10px;">
-        <?php echo elgg_echo('feedback:title'); ?>
-      </h1>
+      <div style='float: left'>
+      	<h1 style="padding-bottom:10px;">
+        	<?php echo elgg_echo('feedback:title'); ?>
+      	</h1>
+	  </div>
+	  <div style='float: left;'>
+		&nbsp; | <a href='<?php echo $CONFIG->url . "pg/feedback/all" ?>'>View All Feedback</a>
+	  </div>
+		
 
-      <div style="padding-bottom:10px;">
+      <div style="padding-bottom:10px; clear: both;">
         <?php echo elgg_echo('feedback:message'); ?>
       </div>
 
@@ -97,7 +102,7 @@
           </div>
 		  <div>
 			<p>
-				<strong>Note: </strong>Feedback is viewable by all logged in users. Before posting, take a look at the <a href='<?php echo $CONFIG->url . "mod/feedback/feedback.php" ?>'>feedback</a> that has already been posted to prevent duplicate issues/suggestions. 
+				<strong>Note: </strong>Feedback is viewable by all logged in users. Before posting, take a look at the <a href='<?php echo $CONFIG->url . "pg/feedback/all" ?>'>feedback</a> that has already been posted to prevent duplicate issues/suggestions. 
 			</p>
 		  </div>
 				  <div style="padding-top:10px;">

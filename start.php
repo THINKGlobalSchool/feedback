@@ -36,7 +36,7 @@
 		elgg_extend_view('css','feedback/css');			                       
 	
 		// Place feedback on the main menu
-		add_menu(elgg_echo('feedback:admin:menu'), $CONFIG->url . "pg/feedback/all");
+		//add_menu(elgg_echo('feedback:admin:menu'), $CONFIG->url . "pg/feedback/all");
 		
 		// Event handler for submenus
 		register_elgg_event_handler('pagesetup','system','feedback_submenus');
