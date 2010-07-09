@@ -32,6 +32,9 @@
 	float: left;
 	border: solid #ccc 1px;
 	background-color: #ffffe0;
+	/*margin-left: 28px;*/
+	position: absolute;
+	left: 25px;
 }
 
 #feedbackError {

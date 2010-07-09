@@ -155,7 +155,7 @@ function FeedBack_Toggle()
       $("#feedBackTogglerLink").html('<?php echo $close_img?>');
     }
 
-    $("#feedBackContent").toggle();
+    $("#feedBackContent").toggle(200);
 }
 
 function FeedBack_Send()
