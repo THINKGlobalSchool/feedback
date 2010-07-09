@@ -1,4 +1,4 @@
-<div class="contentWrapper">
+<div class="">
 		<center>
 		<?php 
 			echo elgg_echo("feedback:noresults");

@@ -10,7 +10,7 @@
      * @link http://www.linkedin.com/in/prashantjuvekar
      */
 
-	require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
+	require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/engine/start.php');
 
 	// Logged in users only 
 	gatekeeper();
@@ -50,11 +50,11 @@ EOT;
 			set_page_owner($page_owner_guid);
 	}
 	
-	$area1 = '';
-	
-	$area2 = elgg_view_title(elgg_echo('feedback:admin:title'));
-	$area2 .= $js;
-	$area2 .= elgg_view("feedback/nav", array("page" => "feedback.php", "status" => $status));
+	// Start content
+	$content .= elgg_view_title(elgg_echo('feedback:title'));
+	$content .= $js;
+	$content .= elgg_view("feedback/feedback_nav", array('selected' => 'all'));
+	$content .= elgg_view("feedback/filter_nav", array("page" => "pg/feedback/all", "status" => $status));
 	$feedback_list = '';
 	
 	$context = get_context();
@@ -65,7 +65,6 @@ EOT;
 
 	} else {		
 		$feedback_list = elgg_list_entities(array('type' => 'object', 'subtype' => 'feedback', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE, 'status' => $status));
-	//	$feedback_list = elgg_list_entities(array('types' => 'object', 'subtypes' => 'rubric', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE));
 	} 
 	
 
@@ -73,14 +72,14 @@ EOT;
 	set_context($context);
 	
 	if (strlen($feedback_list) > 1) {
-		$area2 .= $feedback_list;
+		$content .= $feedback_list;
 	} else {
-		$area2 .=  elgg_view('feedback/noresults');
+		$content .=  elgg_view('feedback/noresults');
 	}
 
 	page_draw(
 		elgg_echo('feedback:admin:title'),
-		elgg_view_layout('two_column_left_sidebar',$area1,$area2)
+		elgg_view_layout('one_column',$content,'')
 	);
 
 ?>

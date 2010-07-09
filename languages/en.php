@@ -16,6 +16,7 @@
 		'item:object:feedback' => 'Feedback',
 		'feedback:label' => 'Feedback',
 		'feedback:title' => 'Feedback',
+		'feedback:owned_feedback' => 'My Feedback',
 
 		'feedback:message' => 'Love it? Hate it? Want to suggest new features or report a bug? We would love to hear from you.',
 		
@@ -40,7 +41,7 @@
 		
 		'feedback:title:yourfeedback' => "Your Feedback",
 		
-		'feedback:submenu:yourfeedback' => 'Your Feedback',
+		'feedback:submenu:yourfeedback' => 'My Feedback',
 		'feedback:submenu:allfeedback' => 'All Feedback',
 		
 		'feedback:update:submit' => 'Submit',

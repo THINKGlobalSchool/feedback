@@ -10,10 +10,9 @@
 	 * 
 	 */
 	
-	$content = '<div class="contentWrapper">';
 	
 	// Build form for submitting new status/comment
-	$form_body .= "<div style='width: 97%; padding-left: 10px;'><label>" . elgg_echo('feedback:comments:new') . "<br />";
+	$form_body .= "<br /><label>" . elgg_echo('feedback:comments:new') . "</label><br />";
 
 	// Build list of options for status dropdown
 	$options = array();
@@ -21,7 +20,7 @@
 		$options[$type] = elgg_echo('feedback:status:' . $type);
 	}
 
-	$form_body .= elgg_view('input/longtext', array('internalname' => 'feedback_comments', "js" => ' style="width: 96%;"'));
+	$form_body .= elgg_view('input/longtext', array('internalname' => 'feedback_comments', 'internalid' => 'feedback_comments'));
 		
 	if ($vars['entity']->owner_guid != get_loggedin_userid() && !has_user_voted(get_loggedin_userid(), $vars['entity']->guid)) {
 		$form_body .= elgg_view('input/radio', array('value' => 1, 'internalname'=>'feedbackvote', 'options'=>array(elgg_echo("feedback:update:like") =>1, elgg_echo("feedback:update:dislike") =>0)));
@@ -36,7 +35,7 @@
 
 	$content .= elgg_view('input/form', array('body' => $form_body, 'action' => $vars['url'] . 'action/feedback/update', 'internalname' => 'comment', 'internalid' => 'comment'));
 	
-	$content .= "</label></div></div>";
+	$content .= "</label>";
 	
 	echo $content;
 ?>

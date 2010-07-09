@@ -25,7 +25,7 @@
 			// Success message
 				system_message(elgg_echo("feedback:delete:success"));
 			// Forward to the main blog page
-				forward("mod/feedback/feedback.php");
+				forward("pg/feedback/all");
 		}
 		
 ?>

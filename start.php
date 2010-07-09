@@ -30,13 +30,13 @@
         register_translations($CONFIG->pluginspath . "feedback/languages/");
         
         // extend the view
-		elgg_extend_view('page_elements/footer', 'page_elements/feedback');
+		elgg_extend_view('page_elements/elgg_footer', 'page_elements/feedback');
 		
 		// extend the site CSS
 		elgg_extend_view('css','feedback/css');			                       
 	
 		// Place feedback on the main menu
-		add_menu(elgg_echo('feedback:admin:menu'), $CONFIG->url . "mod/feedback/feedback.php");
+		add_menu(elgg_echo('feedback:admin:menu'), $CONFIG->url . "pg/feedback/all");
 		
 		// Event handler for submenus
 		register_elgg_event_handler('pagesetup','system','feedback_submenus');
@@ -56,8 +56,8 @@
 		global $CONFIG;
 		
 		if (get_context() == 'feedback') {
-			add_submenu_item(elgg_echo('feedback:submenu:yourfeedback'), $CONFIG->wwwroot . 'mod/feedback/yourfeedback.php');
-			add_submenu_item(elgg_echo('feedback:submenu:allfeedback'), $CONFIG->wwwroot . 'mod/feedback/feedback.php');
+			add_submenu_item(elgg_echo('feedback:submenu:allfeedback'), $CONFIG->wwwroot . 'pg/feedback/all');
+			add_submenu_item(elgg_echo('feedback:submenu:yourfeedback'), $CONFIG->wwwroot . 'pg/feedback/');
 		}
 		
 	}
@@ -83,21 +83,22 @@
 	function feedback_page_handler($page) {
 		global $CONFIG;
 		
-		switch ($page[0]) {
-			case "view" :		
-    			if (isset($page[1])) {
-    				set_input('feedback_guid', $page[1]);				
-						
-					include($CONFIG->pluginspath . "feedback/view.php");
-				} else {
-					include $CONFIG->pluginspath . 'feedback/feedback.php';
-				}	
-				
-				break;
-			
-			default:
-				include $CONFIG->pluginspath . 'feedback/feedback.php';
-				break;				
+		if ($page[0] && !empty($page[0])) {
+			switch ($page[0]) {
+				case "view" :		
+	   				set_input('feedback_guid', $page[1]);				
+					include($CONFIG->pluginspath . "feedback/pages/view.php");
+					break;	
+				case "all" :
+					
+					include $CONFIG->pluginspath . 'feedback/pages/feedback.php';
+					break;
+				default:
+					include $CONFIG->pluginspath . 'feedback/pages/yourfeedback.php';
+					break;				
+			}
+		} else {
+			include $CONFIG->pluginspath . 'feedback/pages/yourfeedback.php';
 		}
 		
 		return true;

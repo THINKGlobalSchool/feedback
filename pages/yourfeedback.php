@@ -10,7 +10,7 @@
      * @link http://www.linkedin.com/in/prashantjuvekar
      */
 
-	require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
+	require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/engine/start.php');
 
 	// Logged in users only 
 	gatekeeper();
@@ -37,9 +37,15 @@
 			set_page_owner($page_owner_guid);
 	}
 	
-	$area1 = '';
-	$area2 = elgg_view_title(elgg_echo('feedback:title:yourfeedback'));
-	$area2 .= elgg_view("feedback/nav", array("page" => "yourfeedback.php"));
+	// Breadcrumbs
+	elgg_push_breadcrumb(elgg_echo('feedback:title'), "{$CONFIG->site->url}pg/feedback/all");	
+	elgg_push_breadcrumb(elgg_echo('feedback:owned_feedback'), "{$CONFIG->site->url}pg/feedback");
+	
+	// Start content
+	$content .= elgg_view('navigation/breadcrumbs');
+	$content .= elgg_view_title(elgg_echo('feedback:title'));
+	$content .= elgg_view('feedback/feedback_nav', array('selected' => 'mine'));
+	$content .= elgg_view("feedback/filter_nav", array("page" => "pg/feedback", "status" => $status));
 	$feedback_list = '';
 	
 	$context = get_context();
@@ -58,14 +64,14 @@
 	set_context($context);
 	
 	if (strlen($feedback_list) > 1) {
-		$area2 .= $feedback_list;
+		$content .= $feedback_list;
 	} else {
-		$area2 .=  elgg_view('feedback/noresults');
+		$content .=  elgg_view('feedback/noresults');
 	}
 
 	page_draw(
 		elgg_echo('feedback:admin:title'),
-		elgg_view_layout('two_column_left_sidebar',$area1,$area2)
+		elgg_view_layout('one_column',$content,'')
 	);
 
 ?>

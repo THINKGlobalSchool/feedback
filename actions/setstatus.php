@@ -47,7 +47,7 @@
 		if ($full) {
 				forward("pg/feedback/view/{$feedback->guid}");
 		} else {
-			forward("mod/feedback/feedback.php?status=".$status_array[$status]);
+			forward("pg/feedback/all?status=".$status_array[$status]);
 		}
 	}
 ?>

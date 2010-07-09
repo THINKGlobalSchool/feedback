@@ -43,6 +43,6 @@ EOT;
 	$form_body .= elgg_view("input/hidden", array('value' => $full, 'internalname' => 'full'));
 	
 
-	echo $js . elgg_view('input/form', array('body' => $form_body, 'action' => $vars['url'] . 'action/feedback/setstatus', 'internalname' => 'update_status_'. $guid, 'internalid' => 'update_status_'.$guid, 'js' => ' style="display: inline;" '));
+	echo elgg_view('input/form', array('body' => $form_body, 'action' => $vars['url'] . 'action/feedback/setstatus', 'internalname' => 'update_status_'. $guid, 'internalid' => 'update_status_'.$guid, 'js' => ' style="display: inline;" ')) . $js;
 
 ?>

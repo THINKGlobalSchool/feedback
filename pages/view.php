@@ -10,7 +10,7 @@
      * @link http://www.linkedin.com/in/prashantjuvekar
      */
 
-	require_once(dirname(dirname(dirname(__FILE__))) . '/engine/start.php');
+	require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/engine/start.php');
 
 	// Logged in users only 
 	gatekeeper();
@@ -28,19 +28,19 @@
 			set_page_owner($page_owner_guid);
 	}
 	
-	$area1 = '';
-	$area2 = elgg_view_title(elgg_echo('feedback:viewtitle'));
+	elgg_push_breadcrumb(elgg_echo('feedback:title'), "{$CONFIG->site->url}pg/feedback/all");	
+	elgg_push_breadcrumb($feedback->title, $feedback->getURL());
+	$content .= elgg_view('navigation/breadcrumbs');
+	$content .= elgg_view_title(elgg_echo('feedback:viewtitle'));
 	
 	$context = get_context();
 	set_context('search');
-	
-	$area2 .= elgg_view_entity($feedback, true);
-		
+	$content .= elgg_view_entity($feedback, true);
 	set_context($context);
 
 	page_draw(
 		elgg_echo('feedback:admin:title'),
-		elgg_view_layout('two_column_left_sidebar',$area1,$area2)
+		elgg_view_layout('one_column',$content, '')
 	);
 
 ?>

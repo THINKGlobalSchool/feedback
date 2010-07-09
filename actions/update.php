@@ -61,6 +61,6 @@
 		
 	// Register error
 	register_error(elgg_echo("feedback:update:failure"));
-	forward("mod/feedback/feedback.php");
+	forward("pg/feedback/all");
 		
 ?>

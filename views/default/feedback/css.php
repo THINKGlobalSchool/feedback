@@ -86,11 +86,11 @@ form#updatestatus {
 }
 
 #feedback_comments_parent {
-	width: 600px !important;
+	width: 100% !important;
 }
 
-#feedback_comments_parent  table.mceLayout {
-	width: 600px !important;
+table.mceLayout {
+	width: 100% !important;
 }
 
 #feedbackvote {
@@ -106,11 +106,62 @@ form#updatestatus {
 	font-weight: bold;
 }
 
+
+#feedback_icon {
+	float: left; 
+	padding-right: 10px;
+}
+
+#feedbackinfo {
+	border-bottom:1px dotted #CCCCCC;
+	padding-bottom: 4px;
+	margin-top: 8px;
+}
+
 #feedbackinfo .listingstrapline {
 	margin: 0 0 0 0px;
 	padding:0;
 	color: #aaa;
 	line-height:1em;
+	
+}
+
+.feedback_status {
+	float:left;
+	width:30%;
+	font-size:90%;
+}
+
+.feedback_status form {
+	display: inline;
+}
+
+.feedback_mood {
+	float:left;
+	width:25%;
+	font-size:90%;
+}
+
+.feedback_about {
+	float:left;
+	width:20%;
+	font-size:90%;
+}
+
+.feedback_controls {
+	float:left;
+	width:20%;
+	text-align:right;
+}
+
+.feedback_metadata {
+	padding:5px;
+	height: 16px;
+	background: #E8F1FC;
+	border: 1px solid #D4DAE6;
+	margin: 0 0 0 0px;
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
 }
 
 /* River */
