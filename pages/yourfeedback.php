@@ -70,7 +70,7 @@
 	}
 
 	page_draw(
-		elgg_echo('feedback:admin:title'),
+		elgg_echo('feedback:title:yourfeedback'),
 		elgg_view_layout('one_column',$content,'')
 	);
 

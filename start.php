@@ -33,7 +33,7 @@
 		elgg_extend_view('page_elements/elgg_footer', 'page_elements/feedback');
 		
 		// extend the site CSS
-		elgg_extend_view('css','feedback/css');			                       
+		elgg_extend_view('css','feedback/css');			                 
 	
 		// Place feedback on the main menu
 		//add_menu(elgg_echo('feedback:admin:menu'), $CONFIG->url . "pg/feedback/all");
@@ -43,6 +43,8 @@
 	
 		// Set up url handler
 		register_entity_url_handler('feedback_url','object', 'feedback');
+		
+		register_plugin_hook('entity:annotate', 'object', 'feedback_annotate_comments');
 		
 		// Register actions
 		global $CONFIG;
@@ -132,7 +134,7 @@
 	function has_user_voted($user_guid, $feedback_guid) {
 		$feedback = get_entity($feedback_guid);
 		
-		$comments = $feedback->getAnnotations('comment');
+		$comments = $feedback->getAnnotations('generic_comment');
 		
 		if (empty($comments))
 			return false;
@@ -152,5 +154,30 @@
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Hook into the framework and provide comments on todo entities.
+	 *
+	 * @param unknown_type $hook
+	 * @param unknown_type $entity_type
+	 * @param unknown_type $returnvalue
+	 * @param unknown_type $params
+	 * @return unknown
+	 */
+	function feedback_annotate_comments($hook, $entity_type, $returnvalue, $params) {
+		$entity = $params['entity'];
+		$full = $params['full'];
+		
+		if (
+			($entity instanceof ElggEntity) &&	// Is the right type 
+			($entity->getSubtype() == 'feedback') &&  // Is the right subtype
+			($full) // This is the full view
+		)
+		{
+			// Display comments
+			return elgg_view_comments($entity);
+		}
+		
 	}
 ?>
