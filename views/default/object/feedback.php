@@ -46,31 +46,18 @@
 		$status_content = elgg_view('feedback/forms/setstatus', $vars);
 	}
 	
-	// Set up comments 
-	$comments = $vars['entity']->getAnnotations('comment');
-	$comments_content = '';	
-	$likes	= 0;
-	$dislikes = 0;
-	$comment_count = 0;
-			
-	// Build comments (if any) and count respective votes
-	foreach($comments as $comment) {
-		$comments_content .= elgg_view_annotation($comment);
-		if (is_array($comment_data = unserialize($comment->value))) {
-			if ($comment_data['feedbackvote'] == 1) 
-				$likes++; 
-			else if ($comment_data['feedbackvote'] == 0) {
-				$dislikes++;
-			}			
-		}	
-		$comment_count++;
-	}
-	
+	$comment_count = elgg_count_comments($vars['entity']);
+
+	$comment_info = "Comments ($comment_count)<br /><br />";			
+				
 	// Edit form div
-	$edit_form .= "<div id='feedback_edit_$guid' style='display: " .  (($vars['full']) ? "block" : "none") . "; width: 100%;'>";
-	$edit_form .= $comments_content;
-	$edit_form .= elgg_view('feedback/forms/edit', $vars);
-	$edit_form .= "</div>";
+	if (!$vars['full']) {
+		$edit_form .= "<div id='feedback_edit_$guid' style='display: " .  (($vars['full']) ? "block" : "none") . "; width: 100%;'>";
+		$edit_form .= elgg_view_comments($vars['entity']);
+		$edit_form .= "</div>";
+		
+		$comment_info = "<a href='#' onclick=\"feedback_toggle_comments($guid); return false;\">Comments ($comment_count)<span id='arrow_$guid' style='font-size: 14px;'>" . (($vars['full']) ? "&uarr;" : "&darr;"). "</span></a><br /><br />";			
+	}
 		
 	// Check for external feedback (possible its not internal)
 	if ($owner) {
@@ -84,9 +71,7 @@
 					date("F j, Y",$time_created)
 		);
 	}
-	
-	$comment_info = "<a href='#' onclick=\"feedback_toggle_comments($guid); return false;\">Comments ($comment_count)&nbsp;&nbsp;&nbsp;&nbsp; Feelin' It! ($likes)&nbsp;&nbsp;&nbsp;&nbsp; Not Feelin' It! ($dislikes)&nbsp;<span id='arrow_$guid' style='font-size: 14px;'>" . (($vars['full']) ? "&uarr;" : "&darr;"). "</span></a><br /><br />";
-	
+		
 	// Build content
 	$content = <<<EOT
 	<div id='feedbackinfo'>

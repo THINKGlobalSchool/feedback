@@ -30,6 +30,12 @@
 	    $string .= $contents;
     }
 	$string .= "</div>";
+	$string .= " <span class='entity_subtext'>" . friendly_time($object->time_created);
+	if (isloggedin()){
+		$string .= "<a class='river_comment_form_button link'>Comment</a>";
+		$string .= elgg_view('likes/forms/link', array('entity' => $object));
+	}
+	$string .= "</span>";
 ?>
 
 <?php echo $string; ?>
