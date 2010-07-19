@@ -160,7 +160,7 @@ table.mceLayout {
 .feedback_metadata {
 	padding:5px;
 	height: 16px;
-	background: #E8F1FC;
+	background: #EEEEEE;
 	border: 1px solid #D4DAE6;
 	margin: 0 0 0 0px;
 	-moz-border-radius:5px 5px 5px 5px;
