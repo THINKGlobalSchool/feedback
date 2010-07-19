@@ -28,7 +28,6 @@
 			set_page_owner($page_owner_guid);
 	}
 	
-	elgg_push_breadcrumb(elgg_echo('feedback:title'), "{$CONFIG->site->url}pg/feedback/all");	
 	elgg_push_breadcrumb($feedback->title, $feedback->getURL());
 	$content .= elgg_view('navigation/breadcrumbs');
 	$content .= elgg_view_title(elgg_echo('feedback:viewtitle'));

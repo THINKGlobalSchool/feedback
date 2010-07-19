@@ -40,6 +40,7 @@
 		'feedback:admin:title' => 'All Site Feedback',
 		
 		'feedback:title:yourfeedback' => "Your Feedback",
+		'feedback:title:allfeedback' => 'All Site Feedback',
 		
 		'feedback:submenu:yourfeedback' => 'My Feedback',
 		'feedback:submenu:allfeedback' => 'All Feedback',

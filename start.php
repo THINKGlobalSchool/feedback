@@ -85,6 +85,8 @@
 	function feedback_page_handler($page) {
 		global $CONFIG;
 		
+		elgg_push_breadcrumb(elgg_echo('feedback:title:allfeedback'), "{$CONFIG->site->url}pg/feedback/all");	
+		
 		if ($page[0] && !empty($page[0])) {
 			switch ($page[0]) {
 				case "view" :		

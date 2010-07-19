@@ -38,7 +38,6 @@
 	}
 	
 	// Breadcrumbs
-	elgg_push_breadcrumb(elgg_echo('feedback:title'), "{$CONFIG->site->url}pg/feedback/all");	
 	elgg_push_breadcrumb(elgg_echo('feedback:owned_feedback'), "{$CONFIG->site->url}pg/feedback");
 	
 	// Start content
