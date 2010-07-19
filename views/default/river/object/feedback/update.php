@@ -10,8 +10,6 @@
 	 * 
 	 */
 	
-	echo 'sadkjaskdjaskdjkasjdas';
-	die();
 	
 	$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
 	$object = get_entity($vars['item']->object_guid);
