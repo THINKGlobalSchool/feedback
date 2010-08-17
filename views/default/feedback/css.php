@@ -35,6 +35,7 @@
 	/*margin-left: 28px;*/
 	position: absolute;
 	left: 25px;
+	z-index: 1;
 }
 
 #feedbackError {
