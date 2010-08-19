@@ -29,17 +29,13 @@
 	$feedback_url = $CONFIG->wwwroot.'mod/feedback/actions/submit_feedback.php';
   
 	$progress_img = '<img src="'.$CONFIG->wwwroot.'mod/feedback/_graphics/ajax-loader-bar.gif" alt="'.elgg_echo('feedback:submit_msg').'" />';
-	$open_img = '<img src="'.$CONFIG->wwwroot.'mod/feedback/_graphics/slide-button-open.gif" alt="'.elgg_echo('feedback:label').'" title="'.elgg_echo('feedback:label').'" />';
-	$close_img = '<img src="'.$CONFIG->wwwroot.'mod/feedback/_graphics/slide-button-close.gif" alt="'.elgg_echo('feedback:label').'" title="'.elgg_echo('feedback:label').'" />';
-
 ?>
 
   <div id="feedbackWrapper">
 	<?php echo "<h1>".$public."</h1>"; ?>
 
   <div id="feedBackToggler">
-    <a id="feedBackTogglerLink" href="javascript:void(0)" onclick="FeedBack_Toggle();this.blur();" style="float:left;position:relative;left:-1px;">
-      <?php echo $open_img ?>
+    <a id="feedBackTogglerLink" href="javascript:void(0)" onclick="FeedBack_Toggle();this.blur();" style="float:left;position:relative;left:-1px;" class="closed">
     </a>
   </div>
 		
@@ -143,7 +139,8 @@ function FeedBack_Toggle()
     {
       toggle_state = 0;
       $("#feedbackWrapper").width("50px");
-      $("#feedBackTogglerLink").html('<?php echo $open_img?>');
+	  $("#feedBackTogglerLink").addClass('closed');
+	  $("#feedBackTogglerLink").removeClass('open');;
       $('#feedBackFormInputs').show();
 			$("#feedBackFormStatus").html("");
       $('#feedbackClose').hide();
@@ -152,7 +149,8 @@ function FeedBack_Toggle()
     {
       toggle_state = 1;
       $("#feedbackWrapper").width("450px");
-      $("#feedBackTogglerLink").html('<?php echo $close_img?>');
+	  $("#feedBackTogglerLink").addClass('open');
+	  $("#feedBackTogglerLink").removeClass('closed');
     }
 
     $("#feedBackContent").toggle(200);

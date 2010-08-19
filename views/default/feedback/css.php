@@ -13,9 +13,24 @@
 
 ?>
 
+a#feedBackTogglerLink {
+	background-image:url(<?php echo $vars['url']; ?>mod/feedback/_graphics/feedback_sprite.png);
+	height: 117px;
+	width: 34px;
+}
+
+.closed {
+	background-position: -34px 0px;
+
+}
+
+.open {
+	background-position: 0px 0px;
+}
+
 #feedbackWrapper {
 	position: fixed;
-	top: 113px;
+	top: 213px;
 	left: 0px;
 	width: 450px;
 	z-index:1; 
