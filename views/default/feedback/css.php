@@ -30,7 +30,7 @@ a#feedBackTogglerLink {
 
 #feedbackWrapper {
 	position: fixed;
-	top: 213px;
+	top: 183px;
 	left: 0px;
 	width: 450px;
 	z-index:1; 
@@ -46,11 +46,14 @@ a#feedBackTogglerLink {
 	overflow: hidden;
 	float: left;
 	border: solid #ccc 1px;
-	background-color: #ffffe0;
+	background-color: #eeeeee;
 	/*margin-left: 28px;*/
 	position: absolute;
 	left: 25px;
 	z-index: 1;
+	-moz-box-shadow: 5px 5px 13px #333;
+	-webkit-box-shadow: 5px 5px 13px #333;
+	box-shadow: 5px 5px 13px #333;
 }
 
 #feedbackError {
