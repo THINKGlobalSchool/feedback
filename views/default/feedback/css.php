@@ -50,7 +50,7 @@ a#feedBackTogglerLink {
 	/*margin-left: 28px;*/
 	position: absolute;
 	left: 25px;
-	z-index: 1;
+	z-index: 8000;
 	-moz-box-shadow: 5px 5px 13px #333;
 	-webkit-box-shadow: 5px 5px 13px #333;
 	box-shadow: 5px 5px 13px #333;
