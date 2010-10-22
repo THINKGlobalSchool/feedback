@@ -39,7 +39,9 @@
 			forward("mod/feedback/feedback.php");
 		}
 
-		add_to_river('river/object/feedback/update', 'update', get_loggedin_userid(), $feedback->getGUID());
+		if (get_plugin_setting('enableriver', 'feedback')) {
+			add_to_river('river/object/feedback/update', 'update', get_loggedin_userid(), $feedback->getGUID());
+		}	
 		
 		// Save successful
 		system_message(elgg_echo('feedback:edit:success'));
