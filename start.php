@@ -30,7 +30,7 @@
         register_translations($CONFIG->pluginspath . "feedback/languages/");
         
         // extend the view
-		elgg_extend_view('page_elements/elgg_footer', 'page_elements/feedback');
+		elgg_extend_view('page_elements/footer', 'page_elements/feedback');
 		
 		// extend the site CSS
 		elgg_extend_view('css','feedback/css');			                 
