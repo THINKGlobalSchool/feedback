@@ -37,7 +37,7 @@
 	$content .= elgg_view_entity($feedback, true);
 	set_context($context);
 
-	page_draw(
+	echo elgg_view_page(
 		elgg_echo($feedback->title),
 		elgg_view_layout('one_column',$content, '')
 	);

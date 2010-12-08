@@ -77,7 +77,7 @@ EOT;
 		$content .=  elgg_view('feedback/noresults');
 	}
 
-	page_draw(
+	echo elgg_view_page(
 		elgg_echo('feedback:admin:title'),
 		elgg_view_layout('one_column',$content,'')
 	);
