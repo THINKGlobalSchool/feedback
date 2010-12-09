@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
-	<field key="author" value="Prashant Juvekar" />
-	<field key="version" value="0.5" />
+	<field key="name" value="Feedback" />
+	<field key="author" value="Prashant Juvekar, Jeff Tilson" />
+	<field key="version" value="SVN (1.8)" />
 	<field key="description" value="Site Feedback Plugin" />
-	<field key="website" value="http://www.linkedin.com/in/prashantjuvekar" />
 	<field key="copyright" value="(C) Prashant Juvekar 2009" />
 	<field key="licence" value="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2" />
-	<field key="elgg_version" value="2009030702" />
+    <field key="elgg_version" value="2010111501" />    
+	<field key="elgg_install_state" value="enabled" />
+	<field key="admin_interface" value="simple" />
 </plugin_manifest>
