@@ -48,9 +48,9 @@
 		
 		// Register actions
 		global $CONFIG;
-		register_action("feedback/delete", false, $CONFIG->pluginspath."feedback/actions/delete.php");
-		register_action("feedback/update", false, $CONFIG->pluginspath."feedback/actions/update.php");
-		register_action("feedback/setstatus", false, $CONFIG->pluginspath."feedback/actions/setstatus.php");
+		elgg_register_action("feedback/delete", $CONFIG->pluginspath."feedback/actions/delete.php");
+		elgg_register_action("feedback/update", $CONFIG->pluginspath."feedback/actions/update.php");
+		elgg_register_action("feedback/setstatus", $CONFIG->pluginspath."feedback/actions/setstatus.php");
 		
 	}
 	
