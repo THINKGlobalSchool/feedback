@@ -9,12 +9,6 @@
 	 * @link http://www.thinkglobalschool.com/
 	 * 
 	 */
-
-	// Only admins can update status
-	admin_gatekeeper();
-	
-	// must have security token 
-	action_gatekeeper();
 	
 	// get input
 	$guid = get_input('feedback_guid');

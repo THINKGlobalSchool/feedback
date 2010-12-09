@@ -50,7 +50,7 @@
 		global $CONFIG;
 		elgg_register_action("feedback/delete", $CONFIG->pluginspath."feedback/actions/delete.php");
 		elgg_register_action("feedback/update", $CONFIG->pluginspath."feedback/actions/update.php");
-		elgg_register_action("feedback/setstatus", $CONFIG->pluginspath."feedback/actions/setstatus.php");
+		elgg_register_action("feedback/setstatus", $CONFIG->pluginspath."feedback/actions/setstatus.php", 'admin');
 		
 	}
 	
