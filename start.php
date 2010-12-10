@@ -33,7 +33,7 @@
 		elgg_extend_view('page_elements/footer', 'page_elements/feedback');
 		
 		// extend the site CSS
-		elgg_extend_view('css','feedback/css');			                 
+		elgg_extend_view('css/screen','feedback/css');			                 
 	
 		// Place feedback on the main menu
 		//add_menu(elgg_echo('feedback:admin:menu'), $CONFIG->url . "pg/feedback/all");
