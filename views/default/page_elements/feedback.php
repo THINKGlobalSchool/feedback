@@ -1,34 +1,32 @@
 <?php
-    /**
-     * Elgg Feedback plugin
-     * Feedback interface for Elgg sites
-     * 
-     * @package Feedback
-     * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-     * @author Prashant Juvekar
-     * @copyright Prashant Juvekar
-     * @link http://www.linkedin.com/in/prashantjuvekar
-     */
+/**
+ * Elgg Feedback plugin
+ * Feedback interface for Elgg sites
+ * 
+ * @package Feedback
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Prashant Juvekar
+ * @copyright Prashant Juvekar
+ * @link http://www.linkedin.com/in/prashantjuvekar
+ */
 
-	global $CONFIG;
-	
-	// Determine if we're hiding the feedback button from the 'public' (only logged in users)
-  	$hide_from_public = get_plugin_setting( 'disablepublic', 'feedback' );
-	$user_ip = $_SERVER[REMOTE_ADDR];
+// Determine if we're hiding the feedback button from the 'public' (only logged in users)
+ 	$hide_from_public = get_plugin_setting( 'disablepublic', 'feedback' );
+$user_ip = $_SERVER[REMOTE_ADDR];
 
-	$user_id = elgg_echo('feedback:default:id');
-	if (isloggedin()) {
-		$user_id = $_SESSION['user']->name . " (" . $_SESSION['user']->email .")";
-	} else {
-		// If we're not logged in, and we're hiding the button from the public, just die()
-		if($hide_from_public) {
-			die();
-		}
+$user_id = elgg_echo('feedback:default:id');
+if (isloggedin()) {
+	$user_id = $_SESSION['user']->name . " (" . $_SESSION['user']->email .")";
+} else {
+	// If we're not logged in, and we're hiding the button from the public, just die()
+	if($hide_from_public) {
+		die();
 	}
-  
-	$feedback_url = $CONFIG->wwwroot.'mod/feedback/actions/submit_feedback.php';
-  
-	$progress_img = '<img src="'.$CONFIG->wwwroot.'mod/feedback/_graphics/ajax-loader-bar.gif" alt="'.elgg_echo('feedback:submit_msg').'" />';
+}
+ 
+$feedback_url = elgg_get_site_url() . 'mod/feedback/actions/feedback/add.php';
+ 
+$progress_img = '<img src="' . elgg_get_site_url() . 'mod/feedback/graphics/ajax-loader-bar.gif" alt="'.elgg_echo('feedback:submit_msg').'" />';
 ?>
 
   <div id="feedbackWrapper">
@@ -47,7 +45,7 @@
       	</h1>
 	  </div>
 	  <div style='float: left;'>
-		&nbsp; | <a href='<?php echo $CONFIG->url . "pg/feedback/all" ?>'>View All Feedback</a>
+		&nbsp; | <a href='<?php echo elgg_get_site_url() . "pg/feedback/all" ?>'>View All Feedback</a>
 	  </div>
 		
 
@@ -98,7 +96,7 @@
           </div>
 		  <div>
 			<p>
-				<strong>Note: </strong>Feedback is viewable by all logged in users. Before posting, take a look at the <a href='<?php echo $CONFIG->url . "pg/feedback/all" ?>'>feedback</a> that has already been posted to prevent duplicate issues/suggestions. 
+				<strong>Note: </strong>Feedback is viewable by all logged in users. Before posting, take a look at the <a href='<?php echo elgg_get_site_url() . "pg/feedback/all" ?>'>feedback</a> that has already been posted to prevent duplicate issues/suggestions. 
 			</p>
 		  </div>
 				  <div style="padding-top:10px;">
@@ -214,7 +212,7 @@ function FeedBack_Send()
 		dataType: "html",
 		error: function() {
       //$('#feedBackFormInputs').show();
-			$("#feedBackFormStatus").html("<div id='feedbackError'><?php echo elgg_echo('feedback:submit_err')?></div>");
+			$("#feedBackFormStatus").html("<div id='feedbackError'><?php echo elgg_echo('feedback:submit:error')?></div>");
       $('#feedbackClose').show();
 		},
 		success: function(data){

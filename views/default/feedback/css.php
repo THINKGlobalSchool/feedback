@@ -1,20 +1,20 @@
 <?php
 
-	/**
-     * Elgg Feedback plugin
-     * Feedback interface for Elgg sites
-     * 
-     * @package Feedback
-     * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-     * @author Prashant Juvekar
-     * @copyright Prashant Juvekar
-     * @link http://www.linkedin.com/in/prashantjuvekar
-	 */
+/**
+ * Elgg Feedback plugin
+ * Feedback interface for Elgg sites
+ * 
+ * @package Feedback
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Prashant Juvekar
+ * @copyright Prashant Juvekar
+ * @link http://www.linkedin.com/in/prashantjuvekar
+ */
 
 ?>
 
 a#feedBackTogglerLink {
-	background-image:url(<?php echo $vars['url']; ?>mod/feedback/_graphics/feedback_sprite.png);
+	background-image:url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_sprite.png);
 	height: 117px;
 	width: 34px;
 }
@@ -98,7 +98,7 @@ form#updatestatus {
 	display: inline;
 }
 
-#feedback_comment {
+#feedback-comment {
 	-moz-border-radius:6px 6px 6px 6px;
 	-webkit-border-radius: 6px 6px 6px 6px;
 	width: 590px; 
@@ -107,7 +107,7 @@ form#updatestatus {
 	margin-top:4px;
 }
 
-#feedback_comments_parent {
+#feedback-comments-parent {
 	width: 100% !important;
 }
 
@@ -129,7 +129,7 @@ table.mceLayout {
 }
 
 
-#feedback_icon {
+#feedback-icon {
 	float: left; 
 	padding-right: 10px;
 }
@@ -148,35 +148,35 @@ table.mceLayout {
 	
 }
 
-.feedback_status {
+.feedback-status {
 	float:left;
 	width:30%;
 	font-size:90%;
 }
 
-.feedback_status form {
+.feedback-status form {
 	display: inline;
 }
 
-.feedback_mood {
+.feedback-mood {
 	float:left;
 	width:25%;
 	font-size:90%;
 }
 
-.feedback_about {
+.feedback-about {
 	float:left;
 	width:20%;
 	font-size:90%;
 }
 
-.feedback_controls {
+.feedback-controls {
 	float:left;
 	width:20%;
 	text-align:right;
 }
 
-.feedback_metadata {
+.feedback-metadata {
 	padding:5px;
 	height: 16px;
 	background: #EEEEEE;
@@ -188,13 +188,13 @@ table.mceLayout {
 
 /* River */
 .river_object_feedback_create {
-	background: url(<?php echo $vars['url']; ?>mod/feedback/images/feedback_river.gif) no-repeat left -1px;
+	background: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_river.gif) no-repeat left -1px;
 }
 
 .river_object_feedback_update {
-	background: url(<?php echo $vars['url']; ?>mod/feedback/images/feedback_river.gif) no-repeat left -1px;
+	background: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_river.gif) no-repeat left -1px;
 }
 .river_object_feedback_comment {
-	background: url(<?php echo $vars['url']; ?>mod/feedback/images/feedback_river.gif) no-repeat left -1px;
+	background: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_river.gif) no-repeat left -1px;
 }
 
