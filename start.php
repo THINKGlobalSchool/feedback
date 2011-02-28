@@ -26,11 +26,12 @@ function feedback_init() {
 	// page handler        
 	elgg_register_page_handler('feedback','feedback_page_handler');
           
-	// extend the view
-	elgg_extend_view('page/elements/footer', 'feedback/feedback');
+	// extend the analytics view.. seems to be the only working place as 
+	// the page/elements/footer is now inside the layout
+	elgg_extend_view('footer/analytics', 'feedback/feedback');
 
 	// extend the site CSS
-	elgg_extend_view('css/screen','feedback/css');			                 
+	elgg_extend_view('css/elgg','feedback/css');			                 
 
 	// Event handler for submenus
 	elgg_register_event_handler('pagesetup','system','feedback_submenus');
