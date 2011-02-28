@@ -1,4 +1,4 @@
-<?php
+		<?php
 /**
  * Feedback - Set resource request status action
  * 
@@ -17,7 +17,7 @@ $full = get_input('full', false);
 
 $feedback = get_entity($guid);
 
-$canedit = isadminloggedin(); 
+$canedit = elgg_is_admin_logged_in(); 
 
 // Get status array and flip for easy search
 $status_array = get_status_types();
@@ -33,7 +33,7 @@ if ($feedback->getSubtype() == "feedback" && $canedit && in_array($status, $stat
 		forward("mod/feedback/feedback.php");
 	}
 
-	if (get_plugin_setting('enableriver', 'feedback')) {
+	if (elgg_get_plugin_setting('enableriver', 'feedback')) {
 		add_to_river('river/object/feedback/update', 'update', elgg_get_logged_in_user_guid(), $feedback->getGUID());
 	}	
 	

@@ -41,12 +41,12 @@ $status_content = elgg_echo("feedback:status:" . $vars['entity']->status);
 $feedback_content = elgg_view('output/longtext', array('value' => $vars['entity']->txt));
 
 // Admin only content
-if (isadminloggedin()) {
+if (elgg_is_admin_logged_in()) {
 	$controls .= elgg_view("output/confirmlink",array('onclick' => 'return false;', 'href' => $vars['url'] . 'action/feedback/delete?guid=' . $vars['entity']->guid, 'text' => elgg_echo('delete'), 'confirm' => elgg_echo('deleteconfirm'),));
 	$status_content = elgg_view('forms/feedback/setstatus', $vars);
 }
 
-$comment_count = elgg_count_comments($vars['entity']);
+$comment_count = $vars['entity']->countComments();
 
 $comment_info = "Comments ($comment_count)<br /><br />";			
 			

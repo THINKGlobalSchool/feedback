@@ -11,11 +11,11 @@
  */
 
 // Determine if we're hiding the feedback button from the 'public' (only logged in users)
- 	$hide_from_public = get_plugin_setting( 'disablepublic', 'feedback' );
+ 	$hide_from_public = elgg_get_plugin_setting( 'disablepublic', 'feedback' );
 $user_ip = $_SERVER[REMOTE_ADDR];
 
 $user_id = elgg_echo('feedback:default:id');
-if (isloggedin()) {
+if (elgg_is_logged_in()) {
 	$user_id = $_SESSION['user']->name . " (" . $_SESSION['user']->email .")";
 } else {
 	// If we're not logged in, and we're hiding the button from the public, just die()
@@ -122,7 +122,7 @@ $progress_img = '<img src="' . elgg_get_site_url() . 'mod/feedback/graphics/ajax
 
 <?php 
   // if user is logged in then disable the feedback ID
-  //if ( isloggedin () ) { 
+  //if ( elgg_is_logged_in () ) { 
     echo "$('#feedback_id').attr ('disabled', 'disabled');";
   //}
 ?>

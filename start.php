@@ -27,7 +27,7 @@ function feedback_init() {
 	elgg_register_page_handler('feedback','feedback_page_handler');
           
 	// extend the view
-	elgg_extend_view('page_elements/footer', 'page_elements/feedback');
+	elgg_extend_view('page/elements/footer', 'feedback/feedback');
 
 	// extend the site CSS
 	elgg_extend_view('css/screen','feedback/css');			                 
@@ -36,7 +36,7 @@ function feedback_init() {
 	elgg_register_event_handler('pagesetup','system','feedback_submenus');
 
 	// Set up url handler
-	elgg_register_entity_url_handler('object', 'feedback', 'register_entity_url_handler');
+	elgg_register_entity_url_handler('object', 'feedback', 'feedback_url');
 
 	elgg_register_plugin_hook_handler('entity:annotate', 'object', 'feedback_annotate_comments');
 
@@ -108,8 +108,8 @@ function feedback_page_handler($page) {
 }
 
 /**
- * Hook into the framework and provide comments on todo entities.
- *
+ * Hook into the framework and provide comments on feedback entities.
+ * @TODO Not sure if this is necessary anymore...
  * @param unknown_type $hook
  * @param unknown_type $entity_type
  * @param unknown_type $returnvalue
@@ -120,11 +120,7 @@ function feedback_annotate_comments($hook, $entity_type, $returnvalue, $params) 
 	$entity = $params['entity'];
 	$full = $params['full'];
 	
-	if (
-		($entity instanceof ElggEntity) &&	// Is the right type 
-		($entity->getSubtype() == 'feedback') &&  // Is the right subtype
-		($full) // This is the full view
-	){
+	if (elgg_instanceof($entity, 'object', 'feedback')) {
 		// Display comments
 		return elgg_view_comments($entity);
 	}

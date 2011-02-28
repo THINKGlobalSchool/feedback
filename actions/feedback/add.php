@@ -49,7 +49,7 @@ $feedback->save();
 echo "<div id='feedbackSuccess'>".elgg_echo("feedback:submit:success")."</div>";
 
 // add to river if setting is enabled
-if (get_plugin_setting('enableriver', 'feedback')) {
+if (elgg_get_plugin_setting('enableriver', 'feedback')) {
 add_to_river('river/object/feedback/create', 'create', elgg_get_logged_in_user_guid(), $feedback->getGUID());
 }
 
@@ -57,7 +57,7 @@ add_to_river('river/object/feedback/create', 'create', elgg_get_logged_in_user_g
 // now email if required
 $user_guids = array();
 for ($idx = 1; $idx <= 5; $idx++) {
-	$name = get_plugin_setting( 'user_'.$idx, 'feedback' );
+	$name = elgg_get_plugin_setting( 'user_'.$idx, 'feedback' );
 	if (!empty($name)) { 
 		if ($user = get_user_by_username($name)) { 
 			$user_guids[] = $user->guid; 
