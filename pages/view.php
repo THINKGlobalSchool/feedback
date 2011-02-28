@@ -21,23 +21,28 @@ $feedback = get_entity($guid);
 
 // if username or owner_guid was not set as input variable, we need to set page owner
 // Get the current page's owner
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
-	$page_owner_guid = get_loggedin_userid();
+	$page_owner_guid = elgg_get_logged_in_user_guid();
 	if ($page_owner_guid)
-		set_page_owner($page_owner_guid);
+		elgg_set_page_owner_guid($page_owner_guid);
 }
 
 elgg_push_breadcrumb($feedback->title, $feedback->getURL());
 $content .= elgg_view('navigation/breadcrumbs');
 $content .= elgg_view_title(elgg_echo('feedback:viewtitle'));
 
-$context = get_context();
-set_context('search');
+$context = elgg_get_context();
+elgg_set_context('search');
 $content .= elgg_view_entity($feedback, true);
-set_context($context);
+elgg_set_context($context);
 
-echo elgg_view_page(
-	elgg_echo($feedback->title),
-	elgg_view_layout('one_column_with_sidebar',$content, '')
+$params = array(
+	'buttons' => '',
+	'content' => $content,
+	'title' => $feedback->title,
+	'filter' => '',
 );
+$body = elgg_view_layout('content', $params);
+
+echo elgg_view_page($title, $body);

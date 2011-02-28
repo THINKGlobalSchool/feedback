@@ -34,7 +34,7 @@ if ($feedback->getSubtype() == "feedback" && $canedit && in_array($status, $stat
 	}
 
 	if (get_plugin_setting('enableriver', 'feedback')) {
-		add_to_river('river/object/feedback/update', 'update', get_loggedin_userid(), $feedback->getGUID());
+		add_to_river('river/object/feedback/update', 'update', elgg_get_logged_in_user_guid(), $feedback->getGUID());
 	}	
 	
 	// Save successful

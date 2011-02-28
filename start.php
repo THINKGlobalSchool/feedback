@@ -10,7 +10,7 @@
     * @link http://www.linkedin.com/in/prashantjuvekar
     */
 
-register_elgg_event_handler('init','system','feedback_init');
+elgg_register_event_handler('init','system','feedback_init');
 
 function feedback_init() {
 	define("FEEDBACK_STATUS_SUBMITTED", 0);
@@ -18,12 +18,13 @@ function feedback_init() {
 	define("FEEDBACK_STATUS_RESOLVED", 2);
 	define("FEEDBACK_STATUS_INPROGRESS", 3);
 	define("FEEDBACK_STATUS_DUPLICATE", 4);
-
-	// Include lib
-	include elgg_get_plugin_path() . 'feedback/lib/feedback.php';
+	
+	// Set up library
+	elgg_register_library('elgg:feedback', elgg_get_plugins_path() . 'feedback/lib/feedback.php');
+	elgg_load_library('elgg:feedback');
 	
 	// page handler        
-	register_page_handler('feedback','feedback_page_handler');
+	elgg_register_page_handler('feedback','feedback_page_handler');
           
 	// extend the view
 	elgg_extend_view('page_elements/footer', 'page_elements/feedback');
@@ -32,23 +33,33 @@ function feedback_init() {
 	elgg_extend_view('css/screen','feedback/css');			                 
 
 	// Event handler for submenus
-	register_elgg_event_handler('pagesetup','system','feedback_submenus');
+	elgg_register_event_handler('pagesetup','system','feedback_submenus');
 
 	// Set up url handler
-	register_entity_url_handler('feedback_url','object', 'feedback');
+	elgg_register_entity_url_handler('object', 'feedback', 'register_entity_url_handler');
 
-	register_plugin_hook('entity:annotate', 'object', 'feedback_annotate_comments');
+	elgg_register_plugin_hook_handler('entity:annotate', 'object', 'feedback_annotate_comments');
 
 	// Register actions
-	$action_base = elgg_get_plugin_path() . "feedback/actions/feedback";
+	$action_base = elgg_get_plugins_path() . "feedback/actions/feedback";
 	elgg_register_action("feedback/delete", "$action_base/delete.php");
 	elgg_register_action("feedback/setstatus","$action_base/setstatus.php", 'admin');	
 }
 
 function feedback_submenus() {
-	if (get_context() == 'feedback') {
-		add_submenu_item(elgg_echo('feedback:submenu:allfeedback'), elgg_get_site_url() . 'pg/feedback/all');
-		add_submenu_item(elgg_echo('feedback:submenu:yourfeedback'), elgg_get_site_url() . 'pg/feedback/');
+	if (elgg_get_context() == 'feedback') {
+		
+		elgg_register_menu_item('page', ElggMenuItem::factory(array(
+										'name'=> 'feedback:submenu:allfeedback',
+										'text' => elgg_echo("feedback:submenu:allfeedback"), 
+										'href' => elgg_get_site_url() . 'pg/feedback/all'))
+		);
+		
+		elgg_register_menu_item('page', ElggMenuItem::factory(array(
+										'name'=> 'feedback:submenu:yourfeedback',
+										'text' => elgg_echo("feedback:submenu:yourfeedback"), 
+										'href' => elgg_get_site_url() . 'pg/feedback/'))
+		);
 	}
 }
 /**
@@ -80,17 +91,17 @@ function feedback_page_handler($page) {
 		switch ($page[0]) {
 			case "view" :		
    				set_input('feedback_guid', $page[1]);				
-				include(elgg_get_plugin_path() . "feedback/pages/view.php");
+				include(elgg_get_plugins_path() . "feedback/pages/view.php");
 				break;	
 			case "all" :
-				include elgg_get_plugin_path() . 'feedback/pages/feedback.php';
+				include elgg_get_plugins_path() . 'feedback/pages/feedback.php';
 				break;
 			default:
-				include elgg_get_plugin_path() . 'feedback/pages/yourfeedback.php';
+				include elgg_get_plugins_path() . 'feedback/pages/yourfeedback.php';
 				break;				
 		}
 	} else {
-		include elgg_get_plugin_path() . 'feedback/pages/yourfeedback.php';
+		include elgg_get_plugins_path() . 'feedback/pages/yourfeedback.php';
 	}
 	
 	return true;

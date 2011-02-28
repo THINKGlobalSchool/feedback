@@ -28,6 +28,8 @@ $js = <<<EOT
 	</script>
 EOT;
 
+$title = elgg_echo('feedback:admin:title');
+
 // Check for and validate status	
 $status = get_input('status');
 
@@ -43,11 +45,11 @@ $offset = get_input("offset", 0);
 
 // if username or owner_guid was not set as input variable, we need to set page owner
 // Get the current page's owner
-$page_owner = page_owner_entity();
+$page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
-	$page_owner_guid = get_loggedin_userid();
+	$page_owner_guid = elgg_get_logged_in_user_guid();
 	if ($page_owner_guid)
-		set_page_owner($page_owner_guid);
+		elgg_set_page_owner_guid($page_owner_guid);
 }
 
 // Start content
@@ -57,11 +59,19 @@ $content .= elgg_view("feedback/feedback_nav", array('selected' => 'all'));
 $content .= elgg_view("feedback/filter_nav", array("page" => "pg/feedback/all", "status" => $status));
 $feedback_list = '';
 
-$context = get_context();
-set_context('search');
+$context = elgg_get_context();
+elgg_set_context('search');
 
 if ($is_status) {
-	$feedback_list = list_entities_from_metadata('status', $status, 'object', 'feedback', 0, $limit, false, false);
+	//$feedback_list = list_entities_from_metadata('status', $status, 'object', 'feedback', 0, $limit, false, false);
+	
+	$feedback_list = elgg_list_entities_from_metadata(array(
+				'type' => 'object',
+				'subtype' => 'feedback',
+				'metadata_names' => array('status'),
+				'metadata_values' => array($status),
+				'limit' => $limit
+	));
 
 } else {		
 	$feedback_list = elgg_list_entities(array('type' => 'object', 'subtype' => 'feedback', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE, 'status' => $status));
@@ -69,7 +79,7 @@ if ($is_status) {
 
 
 	
-set_context($context);
+elgg_set_context($context);
 
 if (strlen($feedback_list) > 1) {
 	$content .= $feedback_list;
@@ -77,7 +87,12 @@ if (strlen($feedback_list) > 1) {
 	$content .=  elgg_view('feedback/noresults');
 }
 
-echo elgg_view_page(
-	elgg_echo('feedback:admin:title'),
-	elgg_view_layout('one_column_with_sidebar',$content,'')
+$params = array(
+	'buttons' => '',
+	'content' => $content,
+	'title' => $title,
+	'filter' => '',
 );
+$body = elgg_view_layout('content', $params);
+
+echo elgg_view_page($title, $body);

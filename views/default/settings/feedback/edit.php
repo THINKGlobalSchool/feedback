@@ -1,3 +1,4 @@
+<br />
 <p>
 	<?php echo elgg_echo('feedback:settings:disablepublic'); ?>
 	<select name="params[disablepublic]">

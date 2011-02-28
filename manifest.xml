@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="name" value="Feedback" />
-	<field key="author" value="Prashant Juvekar, Jeff Tilson" />
-	<field key="version" value="SVN (1.8)" />
-	<field key="description" value="Site Feedback Plugin" />
-	<field key="copyright" value="(C) Prashant Juvekar 2009" />
-	<field key="licence" value="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2" />
-    <field key="elgg_version" value="2010111501" />    
-	<field key="elgg_install_state" value="enabled" />
-	<field key="admin_interface" value="simple" />
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Feedback</name>
+	<author>Jeff Tilson</author>
+	<version>1.8</version>
+	<blurb>User Feedback</blurb>
+	<description>Allows users to submit site feedback</description>
+	<website>http://www.thinkglobalschool.org</website>
+	<copyright>See COPYRIGHT.txt</copyright>
+	<license>GNU Public License version 2</license>
+
+	<requires>
+		<type>elgg_version</type>
+		<version>2009030802</version>
+	</requires>
+
+	<category>Utilities</category>
+	<admin_interface>simple</admin_interface>
 </plugin_manifest>
