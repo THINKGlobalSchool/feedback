@@ -10,11 +10,6 @@
  * @link http://www.linkedin.com/in/prashantjuvekar
  */
 
-require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/engine/start.php');
-
-// Logged in users only 
-gatekeeper();
-
 $js = <<<EOT
 	<script type="text/javascript">
 		function feedback_toggle_comments(guid) {
@@ -48,8 +43,10 @@ $offset = get_input("offset", 0);
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
 	$page_owner_guid = elgg_get_logged_in_user_guid();
-	if ($page_owner_guid)
+
+	if ($page_owner_guid) {
 		elgg_set_page_owner_guid($page_owner_guid);
+	}
 }
 
 // Start content
@@ -77,8 +74,6 @@ if ($is_status) {
 	$feedback_list = elgg_list_entities(array('type' => 'object', 'subtype' => 'feedback', 'limit' => $limit, 'offset' => $offset, 'full_view' => FALSE, 'status' => $status));
 } 
 
-
-	
 elgg_set_context($context);
 
 if (strlen($feedback_list) > 1) {

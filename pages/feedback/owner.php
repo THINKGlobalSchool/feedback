@@ -10,11 +10,6 @@
  * @link http://www.linkedin.com/in/prashantjuvekar
  */
 
-require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/engine/start.php');
-
-// Logged in users only 
-gatekeeper();
-
 $title = elgg_echo('feedback:title:yourfeedback');
 
 // Check for and validate status	

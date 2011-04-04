@@ -11,7 +11,7 @@
  */
 
 /** 
-* Helper function to get a list of available status'
+* Helper function to get a list of available statuses
 *
 * @return array
 */

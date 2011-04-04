@@ -10,24 +10,9 @@
  * @link http://www.linkedin.com/in/prashantjuvekar
  */
 
-// start the elgg engine
-require_once(dirname(dirname(dirname(dirname(dirname(__FILE__))))). '/engine/start.php');
+elgg_make_sticky_form('feedback');
 
-// check if captcha functions are loaded
-if ( function_exists ( "captcha_verify_captcha" ) ) {
-	// captcha verification
-	$token = get_input('captcha_token');
-	$input = get_input('captcha_input');
-	if ( !$token || !captcha_verify_captcha($input, $token) ) {
-		echo "<div id='feedbackError'>".elgg_echo('captcha:captchafail')."</div>";
-		return;
-	}
-}
-
-// Initialise a new ElggObject
 $feedback = new ElggObject();
-
-// Tell the system it's a feedback
 $feedback->subtype = "feedback";
 
 // Set the feedback's content
@@ -39,36 +24,41 @@ $feedback->txt = get_input('txt');
 $feedback->title = get_input('title');
 $feedback->status = "submitted";
 
-// Set access id to logged in users
-$feedback->access_id = ACCESS_LOGGED_IN; 
+$feedback->access_id = ACCESS_LOGGED_IN;
 
-// save the feedback now
-$feedback->save();
+// make sure the title and txt aren't the defaults
+$title_default = elgg_echo('feedback:default:title');
+$description_default = elgg_echo('feedback:default:txt');
+
+if ($title_default == $feedback->title || $description_default == $feedback->txt) {
+	register_error(elgg_echo('feedback:submit:error'));
+	if (elgg_is_xhr()) {
+		echo elgg_view_form('feedback/add');
+	}
+	forward(REFERRER);
+}
+
+if (!$feedback->save()) {
+	register_error(elgg_echo('feedback:submit:error'));
+	if (elgg_is_xhr()) {
+		echo elgg_view_form('feedback/add');
+	}
+	forward(REFERRER);
+}
+
+elgg_clear_sticky_form('feedback');
 
 // Success message
-echo "<div id='feedbackSuccess'>".elgg_echo("feedback:submit:success")."</div>";
+system_message(elgg_echo("feedback:submit:success"));
+
+// show the form again in case they want more.
+if (elgg_is_xhr()) {
+	echo elgg_view_form('feedback/add');
+}
 
 // add to river if setting is enabled
 if (elgg_get_plugin_setting('enableriver', 'feedback')) {
-add_to_river('river/object/feedback/create', 'create', elgg_get_logged_in_user_guid(), $feedback->getGUID());
+	add_to_river('river/object/feedback/create', 'create', elgg_get_logged_in_user_guid(), $feedback->getGUID());
 }
 
-
-// now email if required
-$user_guids = array();
-for ($idx = 1; $idx <= 5; $idx++) {
-	$name = elgg_get_plugin_setting( 'user_'.$idx, 'feedback' );
-	if (!empty($name)) { 
-		if ($user = get_user_by_username($name)) { 
-			$user_guids[] = $user->guid; 
-		} 
-	}
-}
-if (count($user_guids) > 0) {	
-	$site = elgg_get_config('site');
-	notify_user( 
-		$user_guids, $site->getGUID(), 
-		sprintf(elgg_echo('feedback:email:subject'), $feedback->id), 
-		sprintf(elgg_echo('feedback:email:body'), $feedback->txt)
-	);
-}
+forward(REFERRER);

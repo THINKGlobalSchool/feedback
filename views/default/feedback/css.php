@@ -13,48 +13,71 @@
 
 ?>
 
-a#feedBackTogglerLink {
-	background-image:url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_sprite.png);
+a.elgg-feedback {
+	position: fixed;
+	top: 125px;
+	left: 0px;
+	z-index:1;
+	background-image: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_sprite.png);
 	height: 117px;
 	width: 34px;
+	background-position: -34px 0px;
 }
 
-.closed {
-	background-position: -34px 0px;
+a.elgg-feedback.elgg-state-active {
+	background-position: 0px 0px;
+}
 
+a.elgg-feedback span {
+	display: none;
+}
+
+.elgg-feedback-wrapper {
+	width: 400px;
+	position: fixed;
+	/* Required for jquery bug http://bugs.jquery.com/ticket/8316 */
+	top: 125px;
+	left: -1000px;
+}
+
+.elgg-feedback-wrapper textarea {
+	height: 75px;
+}
+
+.elgg-feedback-wrapper .elgg-ajax-loader {
+	display: block;
+	vertical-align: middle;
+	height: 100%;
+}
+
+
+
+
+
+
+
+
+.elgg-feedback-wrapper-old {
+	width: 400px;
+	overflow: hidden;
+	position: absolute;
+	left: -1000;
+	float: left;
+	border: solid #ccc 1px;
+	background-color: #eeeeee;
+	box-shadow: 5px 5px 13px #333;
+	-moz-box-shadow: 5px 5px 13px #333;
+	-webkit-box-shadow: 5px 5px 13px #333;
 }
 
 .open {
 	background-position: 0px 0px;
 }
 
-#feedbackWrapper {
-	position: fixed;
-	top: 183px;
-	left: 0px;
-	width: 450px;
-	z-index:1; 
-}
-
 #feedBackToggler {
 	float: left;
 }
 
-#feedBackContent {
-	width: 400px;
-	display: none;
-	overflow: hidden;
-	float: left;
-	border: solid #ccc 1px;
-	background-color: #eeeeee;
-	/*margin-left: 28px;*/
-	position: absolute;
-	left: 25px;
-	z-index: 8000;
-	-moz-box-shadow: 5px 5px 13px #333;
-	-webkit-box-shadow: 5px 5px 13px #333;
-	box-shadow: 5px 5px 13px #333;
-}
 
 #feedbackError {
 	color: #ff0000;

@@ -1,14 +1,14 @@
 <?php
-   /**
-    * Elgg Feedback plugin
-    * Feedback interface for Elgg sites
-    * 
-    * @package Feedback
-    * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-    * @author Prashant Juvekar
-    * @copyright Prashant Juvekar
-    * @link http://www.linkedin.com/in/prashantjuvekar
-    */
+/**
+ * Elgg Feedback plugin
+ * Feedback interface for Elgg sites
+ *
+ * @package Feedback
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Prashant Juvekar
+ * @copyright Prashant Juvekar
+ * @link http://www.linkedin.com/in/prashantjuvekar
+*/
 
 elgg_register_event_handler('init','system','feedback_init');
 
@@ -24,45 +24,44 @@ function feedback_init() {
 	elgg_load_library('elgg:feedback');
 	
 	// page handler        
-	elgg_register_page_handler('feedback','feedback_page_handler');
+	elgg_register_page_handler('feedback', 'feedback_page_handler');
           
 	// extend the analytics view.. seems to be the only working place as 
 	// the page/elements/footer is now inside the layout
 	elgg_extend_view('footer/analytics', 'feedback/feedback');
 
-	// extend the site CSS
-	elgg_extend_view('css/elgg','feedback/css');			                 
+	// extend the site CSS and js
+	elgg_extend_view('css/elgg', 'feedback/css');
+	elgg_extend_view('js/elgg', 'js/feedback');
 
-	// Event handler for submenus
-	elgg_register_event_handler('pagesetup','system','feedback_submenus');
+	// Add page menus
+	elgg_register_plugin_hook_handler('register', 'menu:page', 'feedback_page_menu_setup');
 
 	// Set up url handler
 	elgg_register_entity_url_handler('object', 'feedback', 'feedback_url');
 
-	elgg_register_plugin_hook_handler('entity:annotate', 'object', 'feedback_annotate_comments');
-
 	// Register actions
-	$action_base = elgg_get_plugins_path() . "feedback/actions/feedback";
-	elgg_register_action("feedback/delete", "$action_base/delete.php");
-	elgg_register_action("feedback/setstatus","$action_base/setstatus.php", 'admin');	
+	$action_base = dirname(__FILE__) . '/actions/feedback';
+
+	if (elgg_get_plugin_setting('disablepublic', 'feedback') === 1) {
+		$access = 'logged_in';
+	} else {
+		$access = 'public';
+	}
+
+	elgg_register_action("feedback/add", "$action_base/add.php", $access);
+	elgg_register_action("feedback/delete", "$action_base/delete.php", 'logged_in');
+	elgg_register_action("feedback/set_status","$action_base/set_status.php", 'admin');
+
+	// only add the captcha if not logged in because you can send feedback when logged out.
+	if (!elgg_is_logged_in()) {
+		elgg_register_plugin_hook_handler('actionlist', 'captcha', 'feedback_captcha_actions');
+	}
+
+	// send notifications
+	elgg_register_event_handler('create', 'object', 'feedback_send_notifications');
 }
 
-function feedback_submenus() {
-	if (elgg_get_context() == 'feedback') {
-		
-		elgg_register_menu_item('page', ElggMenuItem::factory(array(
-										'name'=> 'feedback:submenu:allfeedback',
-										'text' => elgg_echo("feedback:submenu:allfeedback"), 
-										'href' => elgg_get_site_url() . 'pg/feedback/all'))
-		);
-		
-		elgg_register_menu_item('page', ElggMenuItem::factory(array(
-										'name'=> 'feedback:submenu:yourfeedback',
-										'text' => elgg_echo("feedback:submenu:yourfeedback"), 
-										'href' => elgg_get_site_url() . 'pg/feedback/'))
-		);
-	}
-}
 /**
  * Populates the ->getUrl() method for feedback
  *
@@ -71,58 +70,99 @@ function feedback_submenus() {
  */
 function feedback_url($entity) {
 	$title = elgg_get_friendly_title($entity->title);
-	return elgg_get_site_url() . "pg/feedback/view/{$entity->guid}/$title";
+	return elgg_get_site_url() . "feedback/view/{$entity->guid}/$title";
 }
 
 /**
  * Dispatches feedback pages
  * URLs take the form of
- *  All feedback:       pg/feedback/all
- *  View feedback:       pg/feedback/view/<guid>/<title>
+ *  All feedback:        feedback/all
+ *  User feedback:       feedback/owner/username
+ *  View feedback:       feedback/view/<guid>/<title>
  *
  * Title is ignored
  *
  * @param array $page
  * @return NULL
  */
-function feedback_page_handler($page) {	
-	elgg_push_breadcrumb(elgg_echo('feedback:title:allfeedback'), elgg_get_site_url() . "pg/feedback/all");	
+function feedback_page_handler($page) {
+	if (elgg_get_plugin_setting('disablepublic', 'feedback') === 1) {
+		gatekeeper();
+	}
+
+	elgg_push_breadcrumb(elgg_echo('feedback:title:feedback'), 'feedback/all');
+
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
+
+	$pages = dirname(__FILE__) . '/pages/feedback';
 	
-	if ($page[0] && !empty($page[0])) {
-		switch ($page[0]) {
-			case "view" :		
-   				set_input('feedback_guid', $page[1]);				
-				include(elgg_get_plugins_path() . "feedback/pages/view.php");
-				break;	
-			case "all" :
-				include elgg_get_plugins_path() . 'feedback/pages/feedback.php';
-				break;
-			default:
-				include elgg_get_plugins_path() . 'feedback/pages/yourfeedback.php';
-				break;				
-		}
-	} else {
-		include elgg_get_plugins_path() . 'feedback/pages/yourfeedback.php';
+	switch ($page[0]) {
+		case "view" :
+			$guid = elgg_extract(1, $page, null);
+			set_input('guid', $guid);
+			include("$pages/view.php");
+			break;
+
+		case 'owner':
+			include("$pages/owner.php");
+			break;
+
+		case "all" :
+		default:
+			include("$pages/all.php");
+			break;
 	}
 	
 	return true;
 }
 
 /**
- * Hook into the framework and provide comments on feedback entities.
- * @TODO Not sure if this is necessary anymore...
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
- * @return unknown
+ * Adds the feedback actions to the captcha lists
+ *
+ * @param type $hook
+ * @param type $type
+ * @param type $return
+ * @param type $params
  */
-function feedback_annotate_comments($hook, $entity_type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	$full = $params['full'];
-	
-	if (elgg_instanceof($entity, 'object', 'feedback')) {
-		// Display comments
-		return elgg_view_comments($entity);
+function feedback_captcha_actions($hook, $type, $return, $params) {
+	$return[] = 'feedback/add';
+	return $return;
+}
+
+/**
+ * Sends out notifications when new feedback objects are created.
+ *
+ * This is better than in the action because it's loosely coupled and DRY--
+ * You could have another plugin create feedback objects and still have notifications
+ * work this way without having to duplicate the notification code in the other plugin.
+ * 
+ * @param type $event
+ * @param type $type
+ * @param type $object
+ */
+function feedback_send_notifications($event, $type, $object) {
+	if (!elgg_instanceof($object, 'object', 'feedback')) {
+		return null;
 	}
+	
+	$user_guids = array();
+	for ($idx = 1; $idx <= 5; $idx++) {
+		$name = elgg_get_plugin_setting('user_' . $idx, 'feedback');
+		$user = get_user_by_username($name);
+		
+		if ($user) {
+			$user_guids[] = $user->guid;
+		}
+	}
+
+	if (count($user_guids) > 0) {
+		$site = elgg_get_site_entity();
+		$subj = elgg_echo('feedback:email:subject', array($object->id));
+		$body = elgg_echo('feedback:email:body', array($object->txt));
+		notify_user($user_guids, $site->getGUID(), $subj, $body);
+	}
+
+	return null;
 }
