@@ -9,6 +9,7 @@
  * @todo Allow editing feedback by users?
  * @todo Single entity view? (feedback/view/<guid>)
  * @todo Test notifications
+ * @todo owned and friends pages
  */
 
 elgg_register_event_handler('init','system','feedback_init');
