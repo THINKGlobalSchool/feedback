@@ -142,7 +142,7 @@ elgg.feedback.setStatus = function(e) {
 	elgg.action('feedback/set_status', {
 		'data': data,
 		'success': function(json) {
-			console.log(json);
+			// need to do something...remove it if not the old status?
 		}
 	});
 }
