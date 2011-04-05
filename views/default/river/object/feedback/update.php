@@ -1,5 +1,5 @@
 <?php
-	/**
+/**
  * Feedback updated river view
  * 
  * @package Feedback
@@ -10,12 +10,6 @@
  * 
  */
 
-$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
-$object = get_entity($vars['item']->object_guid);
-$url = $object->getURL();
-
-$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-$string = sprintf(elgg_echo("feedback:river:updated"),$url) . " ";
-$string .= elgg_echo("feedback:river:update") . " <a href=\"" . $object->getURL() . "\">" . $object->title  .  "</a>";
-	
-echo $string;
+// pass through create with a different text.
+$vars['text_key'] = 'feedback:river:update';
+echo elgg_view('river/object/feedback/create', $vars);

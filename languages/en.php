@@ -16,7 +16,6 @@ $english = array(
 	'item:object:feedback' => 'Feedback',
 	'feedback:label' => 'Feedback',
 	'feedback:title' => 'Feedback',
-	'feedback:owned_feedback' => 'My Feedback',
 
 	'feedback:message' => 'Love it? Hate it? Want to suggest new features or report a bug? We would love to hear from you.',
 	'feedback:search_note' => 'Note: Feedback is viewable by all logged in users. Before posting, take a look at the '
@@ -43,8 +42,8 @@ $english = array(
 	'feedback:title:yourfeedback' => "Your Feedback",
 	'feedback:title:allfeedback' => 'All Site Feedback',
 	
-	'feedback:submenu:yourfeedback' => 'My Feedback',
-	'feedback:submenu:allfeedback' => 'All Feedback',
+	'feedback:title:mine' => 'My Feedback',
+	'feedback:title:all' => 'All Feedback',
 	
 	'feedback:update:submit' => 'Submit',
 	'feedback:update:confirm' => 'Are you sure you want to update?',
@@ -54,6 +53,7 @@ $english = array(
 	'feedback:update:failure' => 'There was an error updating the feedback',
 			
 	'feedback:delete:success' => 'Feedback was deleted successfully',
+	'feedback:delete:fail' => 'Could not delete feedback',
 	
 	'feedback:mood:' => 'None',
 	'feedback:mood:angry' => 'Angry',
@@ -61,12 +61,13 @@ $english = array(
 	'feedback:mood:happy' => 'Happy',
 
 	'feedback:status' => 'Status',
+	'feedback:status:any' => 'Any',
 	'feedback:status:submitted' => 'Submitted',
 	'feedback:status:acknowledged' => 'Acknowledged',
 	'feedback:status:resolvedaction' => 'Resolved with Action',
 	'feedback:status:resolvednoaction' => 'Resolved without Action',
 	'feedback:status:resolved' => 'Resolved',		
-	'feedback:status:inprogress'	=>	'In Progress',
+	'feedback:status:in_progress'	=>	'In Progress',
 	'feedback:status:duplicate' =>	'Duplicate',
 
 	'feedback:comments'	=> 'Comments',
@@ -96,13 +97,14 @@ $english = array(
 	'feedback:email:updatedsubject' => "Your feedback has been updated!",
 	'feedback:email:updatedbody' => 'Your feedback has been updated, check out your feedback here: %s',
 	
-	'feedback:river:create' => 'new feedback titled',
-	'feedback:river:created' => "%s submitted",
-	'feedback:river:update' => 'feedback titled',
-	'feedback:river:updated' => "%s has updated the status of",
+	'feedback:river:create' => 'added feedback titled %s',
+	'feedback:river:update' => 'updated feedback titled %s',
 	'feedback:river:posted' => "%s posted a comment on",
+
+	'river:commented:object:feedback' => 'feedback',
 	
 	/* Spiced up text for the river */
+	// @todo I don't think this shows up anywhere now.
 	'feedback:river:comment:like' => "%s is feelin' the feedback titled %s",
 	'feedback:river:comment:dislike' => "%s is not feelin' the feedback titled %s",
 	'feedback:river:comment' => "%s posted a comment on feedback titled %s",
@@ -117,4 +119,4 @@ $english = array(
 	'feedback:settings:riverdisplay' => 'Show new feedback and updates on river'
 );
 				
-add_translation("en",$english);
+add_translation("en", $english);

@@ -1,3 +1,4 @@
 <?php
-	echo $vars['url'] . "mod/feedback/graphics/feedback.png";
+
+echo $vars['url'] . "mod/feedback/graphics/feedback.png";
 	

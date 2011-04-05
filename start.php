@@ -4,11 +4,12 @@
  * Feedback interface for Elgg sites
  *
  * @package Feedback
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Prashant Juvekar
- * @copyright Prashant Juvekar
- * @link http://www.linkedin.com/in/prashantjuvekar
-*/
+ *
+ * @todo Where to forward after changing status?
+ * @todo Allow editing feedback by users?
+ * @todo Single entity view? (feedback/view/<guid>)
+ * @todo Test notifications
+ */
 
 elgg_register_event_handler('init','system','feedback_init');
 
@@ -16,7 +17,7 @@ function feedback_init() {
 	define("FEEDBACK_STATUS_SUBMITTED", 0);
 	define("FEEDBACK_STATUS_ACKNOWLEDGED", 1);
 	define("FEEDBACK_STATUS_RESOLVED", 2);
-	define("FEEDBACK_STATUS_INPROGRESS", 3);
+	define("FEEDBACK_STATUS_IN_PROGRESS", 3);
 	define("FEEDBACK_STATUS_DUPLICATE", 4);
 	
 	// Set up library
@@ -34,8 +35,37 @@ function feedback_init() {
 	elgg_extend_view('css/elgg', 'feedback/css');
 	elgg_extend_view('js/elgg', 'js/feedback');
 
-	// Add page menus
+	// Add menus
+	// page menu (sidebar)
+	// @todo not implemented.
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'feedback_page_menu_setup');
+	
+	// secondary filter menu
+
+	// always have all
+	elgg_register_menu_item('feedback-status', array(
+		'name' => $status,
+		'text' => elgg_echo("feedback:status:$status"),
+		'href' => elgg_http_add_url_query_elements(current_page_url(), array('feedback_status' => $status)),
+		'selected' => (get_input('feedback_status', 'any') == $status),
+		'priority' => 1
+	));
+	$statuses = feedback_get_status_types();
+	$i = 2;
+	foreach ($statuses as $id => $status) {
+		elgg_register_menu_item('feedback-status', array(
+			'name' => $id,
+			'text' => $status,
+			'href' => elgg_http_add_url_query_elements(current_page_url(), array('feedback_status_id' => $id)),
+			'selected' => (get_input('feedback_status_id', 'any') == $id),
+			'priority' => $i
+		));
+		
+		$i++;
+	}
+
+	// the status, mood, about menu on the full view
+	elgg_register_plugin_hook_handler('register', 'menu:feedback-admin', 'feedback_entity_menu_setup');
 
 	// Set up url handler
 	elgg_register_entity_url_handler('object', 'feedback', 'feedback_url');
@@ -90,7 +120,7 @@ function feedback_page_handler($page) {
 		gatekeeper();
 	}
 
-	elgg_push_breadcrumb(elgg_echo('feedback:title:feedback'), 'feedback/all');
+	elgg_push_breadcrumb(elgg_echo('feedback:title'), 'feedback/all');
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';
@@ -165,4 +195,55 @@ function feedback_send_notifications($event, $type, $object) {
 	}
 
 	return null;
+}
+
+/**
+ * Adds the menu items for the horizontal menu on the feedback entities.
+ *
+ * @param type $hook
+ * @param type $type
+ * @param type $value
+ * @param type $params
+ * @return type
+ */
+function feedback_entity_menu_setup($hook, $type, $value, $params) {
+	$entity = elgg_extract('entity', $params);
+
+	if ($entity) {
+
+		$id = 'feedback-' . $entity->getGUID();
+		$content = "<label class=\"mrs\" for=\"$id\">" . elgg_echo('feedback:status') . ':</label>';
+		$content .= elgg_view('input/dropdown', array(
+			'name' => 'status',
+			'value' => $entity->status,
+			'options_values' => feedback_get_status_types(),
+			'id' => $id
+		));
+		$value[] = ElggMenuItem::factory(array(
+			'name' => 'status',
+			'href' => false,
+			'text' => $content,
+			'priority' => 10
+		));
+
+		$content = '<label class="mrs">' . elgg_echo('feedback:list:mood') . ':</label>';
+		$content .= elgg_echo("feedback:mood:$entity->mood");
+		$value[] = ElggMenuItem::factory(array(
+			'name' => 'mood',
+			'href' => false,
+			'text' => $content,
+			'priority' => 20
+		));
+
+		$content = '<label class="mrs">' . elgg_echo('feedback:list:about') . ':</label>';
+		$content .= elgg_echo("feedback:about:$entity->about");
+		$value[] = ElggMenuItem::factory(array(
+			'name' => 'about',
+			'href' => false,
+			'text' => $content,
+			'priority' => 30
+		));
+	}
+
+	return $value;
 }

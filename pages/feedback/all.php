@@ -1,14 +1,39 @@
 <?php
 /**
- * Elgg Feedback plugin
- * Feedback interface for Elgg sites
+ * All feedback
  * 
  * @package Feedback
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Prashant Juvekar
- * @copyright Prashant Juvekar
- * @link http://www.linkedin.com/in/prashantjuvekar
  */
+
+$title = elgg_echo('feedback:title:all');
+
+// show the secondary filter menu.
+$content = elgg_view_menu('feedback-status', array(
+	'sort_by' => 'priority',
+	// recycle the menu filter css
+	'class' => 'elgg-menu-hz elgg-menu-filter elgg-menu-filter-default'
+));
+
+// this is a bit different--We always show the full view in the lists here.
+$content .= feedback_list_feedback_entities(null, array('full_view' => true));
+
+$body .= elgg_view_layout('content', array(
+	'filter_context' => 'all',
+	'content' => $content,
+	'title' => $title,
+	'buttons' => false,
+));
+
+echo elgg_view_page($title, $body);
+
+return true;
+
+
+
+
+
+
+
 
 $js = <<<EOT
 	<script type="text/javascript">
@@ -49,15 +74,12 @@ if (!$page_owner) {
 	}
 }
 
-// Start content
-$content .= elgg_view_title(elgg_echo('feedback:title'));
-$content .= $js;
-$content .= elgg_view("feedback/feedback_nav", array('selected' => 'all'));
-$content .= elgg_view("feedback/filter_nav", array("page" => "pg/feedback/all", "status" => $status));
-$feedback_list = '';
-
-$context = elgg_get_context();
-elgg_set_context('search');
+$content = elgg_view_menu('polls-status', array(
+	'sort_by' => 'priority',
+	// recycle the menu filter css
+	'class' => 'elgg-menu-hz elgg-menu-filter elgg-menu-filter-default'
+));
+$content .= polls_get_page_content_list();
 
 if ($is_status) {
 	//$feedback_list = list_entities_from_metadata('status', $status, 'object', 'feedback', 0, $limit, false, false);

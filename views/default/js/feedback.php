@@ -10,13 +10,15 @@ elgg.feedback.init = function() {
 	// custom popup positioning and effects
 	elgg.register_hook_handler('getOptions', 'ui.popup', elgg.feedback.popupSetup);
 
-	// save button
+	// form buttons
 	$('.elgg-feedback-wrapper input[type=submit]').live('click', elgg.feedback.submit);
-
-	// cancel button
 	$('.elgg-feedback-wrapper input[type=reset]').live('click', elgg.feedback.reset);
 
+	// store default values, clear on focus, restore on blur
 	elgg.feedback.setDefaultValues();
+
+	// set status for admin control panel
+	$('.elgg-feedback-entity-wrapper select').live('change', elgg.feedback.setStatus);
 }
 
 /**
@@ -128,6 +130,21 @@ elgg.feedback.reset = function(e) {
 	e.preventDefault();
 
 	$('a.elgg-feedback').click();
+}
+
+elgg.feedback.setStatus = function(e) {
+	var $this = $(this);
+	var data = {
+		guid: $this.attr('id').split('-')[1],
+		status_id: $this.val()
+	}
+
+	elgg.action('feedback/set_status', {
+		'data': data,
+		'success': function(json) {
+			console.log(json);
+		}
+	});
 }
 
 elgg.register_hook_handler('init', 'system', elgg.feedback.init);

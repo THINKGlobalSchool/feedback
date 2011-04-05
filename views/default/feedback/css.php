@@ -50,12 +50,27 @@ a.elgg-feedback span {
 	height: 100%;
 }
 
+.elgg-feedback-entity-wrapper .elgg-toggler:after{
+	content: '↓';
+}
 
+.elgg-feedback-entity-wrapper .elgg-state-active:after{
+	content: '↑';
+}
 
+.elgg-menu-feedback-admin {
+	border: 1px solid #ccc;
+	background: #eee;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	padding: 5px;
+}
 
-
-
-
+.elgg-menu-feedback-admin li {
+	display: inline;
+	margin-right: 90px;
+}
 
 .elgg-feedback-wrapper-old {
 	width: 400px;

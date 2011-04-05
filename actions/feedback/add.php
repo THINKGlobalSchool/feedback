@@ -20,9 +20,10 @@ $feedback->page = get_input('page');
 $feedback->mood = get_input('mood');
 $feedback->about = get_input('about');
 $feedback->id = get_input('id');
-$feedback->txt = get_input('txt');
+// @todo This should really use description
+$feedback->txt = get_input('description');
 $feedback->title = get_input('title');
-$feedback->status = "submitted";
+$feedback->status = FEEDBACK_STATUS_SUBMITTED;
 
 $feedback->access_id = ACCESS_LOGGED_IN;
 
