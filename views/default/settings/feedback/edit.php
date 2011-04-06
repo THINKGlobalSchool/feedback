@@ -1,41 +1,67 @@
-<br />
-<p>
-	<?php echo elgg_echo('feedback:settings:disablepublic'); ?>
-	<select name="params[disablepublic]">
-  		<option value="1" <?php if ($vars['entity']->disablepublic == 1) echo " selected=\"yes\" "; ?>>Yes</option>
-  		<option value="0" <?php if ($vars['entity']->disablepublic == 0) echo " selected=\"yes\" "; ?>>No</option>
-  	</select>
-	<br />
-	
-	<?php echo elgg_echo('feedback:settings:riverdisplay'); ?>
-	<select name="params[enableriver]">
-  		<option value="1" <?php if ($vars['entity']->enableriver == 1) echo " selected=\"yes\" "; ?>>Yes</option>
-  		<option value="0" <?php if ($vars['entity']->enableriver == 0) echo " selected=\"yes\" "; ?>>No</option>
-  	</select>
-	<br />
+<?php
+/**
+ * Settings page for feedback.
+ */
 
-	<?php echo elgg_echo('feedback:user_1'); ?>
+$settings = $vars['entity'];
+$enable_river = $settings->enableriver;
 
-    <input type='text' size='60' name='params[user_1]' value="<?php echo $vars['entity']->user_1; ?>" />
-    <br />
+$admin_users = array(
+	1 => $settings->user_1,
+	2 => $settings->user_2,
+	3 => $settings->user_3,
+	4 => $settings->user_4,
+	5 => $settings->user_5,
+);
 
-    <?php echo elgg_echo('feedback:user_2'); ?>
+$disable_public = elgg_view('input/dropdown', array(
+	'name' => 'params[disablepublic]',
+	'option_values' => array(
+		'1' => elgg_echo('yes'),
+		'0' => elgg_echo('no')
+	),
+	'value' => (int)$settings->disablepublic
+));
 
-    <input type='text' size='60' name='params[user_2]' value="<?php echo $vars['entity']->user_2; ?>" />
-    <br />
+// currently unavailable
+$disable_public = '';
 
-	<?php echo elgg_echo('feedback:user_3'); ?>
+$enable_river = elgg_view('input/dropdown', array(
+	'name' => 'params[enableriver]',
+	'options_values' => array(
+		'1' => elgg_echo('option:yes'),
+		'0' => elgg_echo('option:no')
+	),
+	'value' => (int)$settings->enableriver
+));
 
-    <input type='text' size='60' name='params[user_3]' value="<?php echo $vars['entity']->user_3; ?>" />
-    <br />
+$admin_users_input = '<ol>';
+foreach ($admin_users as $i => $user) {
+	$admin_users_input .= '<li>';
+	$admin_users_input .= elgg_view('input/text', array(
+		'name' => "params[user_$i]",
+		'value' => $user
+	));
+	$admin_users_input .= '</li>';
+}
+$admin_users_input .= '</ol>';
 
-	<?php echo elgg_echo('feedback:user_4'); ?>
+// @todo anonymous feedback disabled currently
+/*
+<label>
+	echo elgg_echo('feedback:settings:disablepublic');
+	echo $disable_public;
+</label>
+*/
+?>
 
-    <input type='text' size='60' name='params[user_4]' value="<?php echo $vars['entity']->user_4; ?>" />
-    <br />
+<label><?php
+	echo elgg_echo('feedback:settings:riverdisplay');
+	echo $enable_river;
+?></label>
 
-	<?php echo elgg_echo('feedback:user_5'); ?>
+<?php
+	echo '<label>' . elgg_view('output/longtext', array('value' => elgg_echo('feedback:settings:admin_users'))) . '</label>';
+	echo $admin_users_input;
+?>
 
-    <input type='text' size='60' name='params[user_5]' value="<?php echo $vars['entity']->user_5; ?>" />
-    <br />
-</p>

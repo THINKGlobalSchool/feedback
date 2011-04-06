@@ -3,10 +3,6 @@
  * Feedback helper functions
  * 
  * @package Feedback
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Jeff Tilson
- * @copyright THINK Global School 2010
- * @link http://www.thinkglobalschool.com/
  * 
  */
 
@@ -50,6 +46,7 @@ function feedback_get_status_friendly_name($status_id) {
 }
 
 /**
+ * Returns feedback entities. Automatically grabs the status from get_input()
  *
  * @param type $container_guid
  * @return string html to display
@@ -80,4 +77,58 @@ function feedback_list_feedback_entities($container_guid = ELGG_ENTITIES_ANY_VAL
 	}
 
 	return $content;
+}
+
+/**
+ * Checks if a user is able to change feedback attributes.
+ *
+ * @param mixed $user ElggUser or null for logged in user.
+ * @return bool
+ */
+function feedback_can_admin_feedback(ElggEntity $feedback, $user = null) {
+	if (!$user) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+
+	if (!elgg_instanceof($user, 'user')) {
+		return false;
+	}
+
+	// always allowed for admin
+	if ($user->isAdmin()) {
+		return true;
+	}
+
+	$admins = feedback_get_feedback_admin_user_entities();
+
+	foreach ($admins as $admin) {
+		if ($user->username == $admin->username) {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+/**
+ * Gets an array of all defined feedback admins.
+ *
+ * @return array
+ */
+function feedback_get_feedback_admin_user_entities() {
+	$users = array();
+	$i = 1;
+	$username = elgg_get_plugin_setting("user_$i", 'feedback');
+
+	while($username) {
+		$user = get_user_by_username($username);
+		if ($user) {
+			$users[] = $user;
+		}
+
+		$i++;
+		$username = elgg_get_plugin_setting("user_$i", 'feedback');
+	}
+
+	return $users;
 }

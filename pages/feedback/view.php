@@ -1,48 +1,29 @@
 <?php
-   /**
-    * Elgg Feedback plugin
-    * Feedback interface for Elgg sites
-    * 
-    * @package Feedback
-    * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-    * @author Prashant Juvekar
-    * @copyright Prashant Juvekar
-    * @link http://www.linkedin.com/in/prashantjuvekar
-    */
+/**
+ * Single feedback
+ *
+ * @package Feedback
+ */
 
-require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/engine/start.php');
+$feedback = get_entity(get_input('guid'));
 
-// Logged in users only 
-gatekeeper();
-
-// Get GUID
-$guid = get_input('feedback_guid');
-$feedback = get_entity($guid);
-
-// if username or owner_guid was not set as input variable, we need to set page owner
-// Get the current page's owner
 $page_owner = elgg_get_page_owner_entity();
-if (!$page_owner) {
-	$page_owner_guid = elgg_get_logged_in_user_guid();
-	if ($page_owner_guid)
-		elgg_set_page_owner_guid($page_owner_guid);
-}
 
-elgg_push_breadcrumb($feedback->title, $feedback->getURL());
-$content .= elgg_view('navigation/breadcrumbs');
-$content .= elgg_view_title(elgg_echo('feedback:viewtitle'));
+$crumbs_title = $page_owner->name;
+elgg_push_breadcrumb($crumbs_title, "feedback/owner/$page_owner->username");
 
-$context = elgg_get_context();
-elgg_set_context('search');
-$content .= elgg_view_entity($feedback, true);
-elgg_set_context($context);
+$title = $feedback->title;
 
-$params = array(
-	'buttons' => '',
+elgg_push_breadcrumb($title);
+
+$content = elgg_view_entity($feedback, array('full_view' => true, 'comments_open' => true));
+// comments handled in the view.
+
+$body = elgg_view_layout('content', array(
 	'content' => $content,
-	'title' => $feedback->title,
+	'title' => $title,
 	'filter' => '',
-);
-$body = elgg_view_layout('content', $params);
+	'header' => '',
+));
 
 echo elgg_view_page($title, $body);

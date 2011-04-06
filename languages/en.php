@@ -1,14 +1,8 @@
 <?php
-
 /**
- * Elgg Feedback plugin
- * Feedback interface for Elgg sites
+ * Feedback English strings
  * 
  * @package Feedback
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
- * @author Prashant Juvekar
- * @copyright Prashant Juvekar
- * @link http://www.linkedin.com/in/prashantjuvekar
  */
 
 $english = array(
@@ -86,12 +80,6 @@ $english = array(
 	'feedback:list:from' => 'From',
 	'feedback:list:title' => 'Title', 
 	
-	'feedback:user_1' => "User Name 1: ",
-	'feedback:user_2' => "User Name 2: ",
-	'feedback:user_3' => "User Name 3: ",
-	'feedback:user_4' => "User Name 4: ",
-	'feedback:user_5' => "User Name 5: ",
-	
 	'feedback:email:subject' => 'Received feedback from %s',
 	'feedback:email:body' => '%s',
 	'feedback:email:updatedsubject' => "Your feedback has been updated!",
@@ -116,7 +104,8 @@ $english = array(
 	'feedback:strapline' => 'From %s %s',
 	
 	'feedback:settings:disablepublic' => 'Visible to only logged in users', 
-	'feedback:settings:riverdisplay' => 'Show new feedback and updates on river'
+	'feedback:settings:riverdisplay' => 'Show new feedback and updates on river',
+	'feedback:settings:admin_users' => 'Usernames listed here will be able to change the status of or delete feedback.',
 );
 				
 add_translation("en", $english);

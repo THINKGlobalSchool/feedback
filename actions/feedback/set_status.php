@@ -14,12 +14,11 @@
 $guid = get_input('guid');
 $status_id = get_input('status_id');
 $feedback = get_entity($guid);
-$canedit = elgg_is_admin_logged_in();
+$can_admin = feedback_can_admin_feedback($feedback);
 // returns false if can't find it
 $valid_status = feedback_get_status_friendly_name($status_id);
 
-if (elgg_instanceof($feedback, 'object', 'feedback') && $canedit && $valid_status) {
-	
+if (elgg_instanceof($feedback, 'object', 'feedback') && $can_admin && $valid_status) {
 	if (false === ($feedback->status = $status_id)) {
 		register_error(elgg_echo("feedback:error:status"));
 		forward(REFERER);

@@ -1,11 +1,23 @@
 <?php
 /**
- * Friends feedback
- *
- * @package Feedback
+ * Feedback friends page
  */
 
-$title = elgg_echo('feedback:title:all');
+
+$owner = elgg_get_page_owner_entity();
+elgg_push_breadcrumb($owner->name);
+elgg_push_breadcrumb(elgg_echo('friends'));
+
+$title = elgg_echo('feedback:title:friends');
+
+// @todo inefficient
+$friends = $owner->getFriends(null, 9999);
+$friend_guids = array();
+foreach ($friends as $friend) {
+	$friend_guids[] = $friend->getGUID();
+}
+
+var_dump($friends_guids);
 
 // show the secondary filter menu.
 $content = elgg_view_menu('feedback-status', array(
@@ -14,32 +26,17 @@ $content = elgg_view_menu('feedback-status', array(
 	'class' => 'elgg-menu-hz elgg-menu-filter elgg-menu-filter-default'
 ));
 
-// get entities
+// this is a bit different--We always show the full view in the lists here.
+$content .= feedback_list_feedback_entities($friend_guids, array('full_view' => true));
+
 $options = array(
-	'type' => 'object',
-	'subtype' => 'feedback',
-	'limit' => $limit
-);
-
-$status = get_input('feedback_status', 'all');
-
-if ($status != 'all') {
-	$options['metadata_name_value_pair'] = array('status' => $status);
-}
-
-$content = elgg_list_entities_from_metadata($options);
-
-
-$body .= elgg_view_layout('content', array(
-	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
-	'buttons' => false,
-));
+);
+
+$options['filter_context'] = 'friends';
+
+
+$body .= elgg_view_layout('content', $options);
 
 echo elgg_view_page($title, $body);
-
-return true;
-
-
-

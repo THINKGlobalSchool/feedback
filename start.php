@@ -6,10 +6,9 @@
  * @package Feedback
  *
  * @todo Where to forward after changing status?
- * @todo Allow editing feedback by users?
- * @todo Single entity view? (feedback/view/<guid>)
- * @todo Test notifications
- * @todo owned and friends pages
+ * @todo It looks like users should be notified if they status is changed? This doesn't seem to be
+ * implemented in the original plugin.
+ * @todo Check breadcrumbs and contexts
  */
 
 elgg_register_event_handler('init','system','feedback_init');
@@ -37,20 +36,17 @@ function feedback_init() {
 	elgg_extend_view('js/elgg', 'js/feedback');
 
 	// Add menus
-	// page menu (sidebar)
-	// @todo not implemented.
-	elgg_register_plugin_hook_handler('register', 'menu:page', 'feedback_page_menu_setup');
 	
 	// secondary filter menu
-
 	// always have all
 	elgg_register_menu_item('feedback-status', array(
-		'name' => $status,
-		'text' => elgg_echo("feedback:status:$status"),
-		'href' => elgg_http_add_url_query_elements(current_page_url(), array('feedback_status' => $status)),
-		'selected' => (get_input('feedback_status', 'any') == $status),
+		'name' => 'any',
+		'text' => elgg_echo("feedback:status:any"),
+		'href' => '/feedback',
+		'selected' => (get_input('feedback_status', 'any') != 'any'),
 		'priority' => 1
 	));
+	
 	$statuses = feedback_get_status_types();
 	$i = 2;
 	foreach ($statuses as $id => $status) {
@@ -68,6 +64,9 @@ function feedback_init() {
 	// the status, mood, about menu on the full view
 	elgg_register_plugin_hook_handler('register', 'menu:feedback-admin', 'feedback_entity_menu_setup');
 
+	// remove edit, add delete for authorized users
+	elgg_register_plugin_hook_handler('prepare', 'menu:entity', 'feedback_customize_entity_menu');
+
 	// Set up url handler
 	elgg_register_entity_url_handler('object', 'feedback', 'feedback_url');
 
@@ -82,7 +81,7 @@ function feedback_init() {
 
 	elgg_register_action("feedback/add", "$action_base/add.php", $access);
 	elgg_register_action("feedback/delete", "$action_base/delete.php", 'logged_in');
-	elgg_register_action("feedback/set_status","$action_base/set_status.php", 'admin');
+	elgg_register_action("feedback/set_status", "$action_base/set_status.php", 'logged_in');
 
 	// only add the captcha if not logged in because you can send feedback when logged out.
 	if (!elgg_is_logged_in()) {
@@ -130,10 +129,14 @@ function feedback_page_handler($page) {
 	$pages = dirname(__FILE__) . '/pages/feedback';
 	
 	switch ($page[0]) {
-		case "view" :
+		case 'view' :
 			$guid = elgg_extract(1, $page, null);
 			set_input('guid', $guid);
 			include("$pages/view.php");
+			break;
+
+		case 'friends':
+			include("$pages/friends.php");
 			break;
 
 		case 'owner':
@@ -178,21 +181,15 @@ function feedback_send_notifications($event, $type, $object) {
 		return null;
 	}
 	
-	$user_guids = array();
-	for ($idx = 1; $idx <= 5; $idx++) {
-		$name = elgg_get_plugin_setting('user_' . $idx, 'feedback');
-		$user = get_user_by_username($name);
-		
-		if ($user) {
-			$user_guids[] = $user->guid;
-		}
-	}
+	$users = feedback_get_feedback_admin_user_entities();
 
-	if (count($user_guids) > 0) {
-		$site = elgg_get_site_entity();
-		$subj = elgg_echo('feedback:email:subject', array($object->id));
-		$body = elgg_echo('feedback:email:body', array($object->txt));
-		notify_user($user_guids, $site->getGUID(), $subj, $body);
+	if ($users) {
+		foreach ($users as $user) {
+			$site = elgg_get_site_entity();
+			$subj = elgg_echo('feedback:email:subject', array($object->id));
+			$body = elgg_echo('feedback:email:body', array($object->txt));
+			notify_user($user->getGUID(), $site->getGUID(), $subj, $body);
+		}
 	}
 
 	return null;
@@ -247,4 +244,42 @@ function feedback_entity_menu_setup($hook, $type, $value, $params) {
 	}
 
 	return $value;
+}
+
+/**
+ * Removes the edit links for feedback and adds the delete link using with the special permissions.
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $type
+ * @param unknown_type $return
+ * @param unknown_type $params
+ */
+function feedback_customize_entity_menu($hook, $type, $return, $params) {
+	$entity = $params['entity'];
+
+	// don't display edit link for polls
+	if (elgg_instanceof($entity, 'object', 'feedback')) {
+		foreach ($return['default'] as $i => $menu) {
+			// remove both, but add delete after
+			if ($menu->getName() == 'edit' || $menu->getName() == 'delete') {
+				unset ($return['default'][$i]);
+			}
+		}
+
+		// readd delete link if able to edit
+		if (feedback_can_admin_feedback($entity)) {
+			$options = array(
+				'name' => 'delete',
+				'text' => elgg_view_icon('delete'),
+				'title' => elgg_echo('delete:this'),
+				'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+				'confirm' => elgg_echo('deleteconfirm'),
+				'priority' => 300,
+			);
+
+			$return['default'][] = ElggMenuItem::factory($options);
+		}
+	}
+
+	return $return;
 }

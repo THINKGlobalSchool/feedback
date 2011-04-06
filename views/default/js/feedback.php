@@ -50,20 +50,25 @@ elgg.feedback.popupSetup = function(hook, type, params, options) {
 		
 		// hide if already open
 		if ($target.is(':visible')) {
-			$target.hide('slide', {direction: 'left'}, 250)
+			$target.hide('slide', {direction: 'left'}, 200)
 			return;
 		}
 
+		// add padding the width of the popper
+		var posL = params.source.outerWidth();
+
 		options.my = 'left top';
-		options.at = 'right top';
+		options.at = 'left top';
 		options.collision = 'none';
+		options.offset = posL + ' 0';
 
 		// @hack jQuery can't get the position of hidden elements, so jquery UI can't
 		// position them. We solve that by positioning this element offscreen
 		$target
+			.css('margin-left', posL + 'px')
 			.css('display', 'block')
 			.position(options)
-			.show('slide', {direction: 'left'}, 250);
+			.show('slide', {direction: 'left'}, 200);
 
 		return false;
 	}
@@ -112,13 +117,16 @@ elgg.feedback.submit = function(e) {
 		data: $form.serialize(),
 		success: function(json) {
 			$container.html(json.output);
+			// don't put the default value things here because
+			// it will clear the user input!
+			// @todo use a different field than value (title, perhaps?)
 
 			// close the feedback on success
 			if (json.status >= 0) {
-				// rebind the default value events
-				elgg.feedback.setDefaultValues();
 				$('a.elgg-feedback').click();
 			}
+
+			elgg.feedback.setDefaultValues();
 		}
 	});
 }

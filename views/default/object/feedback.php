@@ -45,9 +45,8 @@ $metadata = elgg_view_menu('entity', array(
 $subtitle = "$author_text $date $categories $comments_link";
 
 if ($full && !elgg_in_context('gallery')) {
-	$header = elgg_view_title($feedback->title);
 	$description = elgg_view('output/longtext', array('value' => $feedback->txt));
-	if (elgg_is_admin_logged_in()) {
+	if (feedback_can_admin_feedback($feedback)) {
 		$menu = elgg_view_menu('feedback-admin', array(
 			'entity' => $feedback,
 			'sort_by' => 'priority'
@@ -64,7 +63,6 @@ HTML;
 
 	$params = array(
 		'entity' => $feedback,
-		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'tags' => $tags,
@@ -72,13 +70,7 @@ HTML;
 	);
 
 	$list_body = elgg_view('page/components/summary', $params);
-	$feedback_info = elgg_view_image_block($owner_icon, $list_body, array('class' => 'elgg-feedback-entity-wrapper'));
-
-	echo <<<HTML
-$header
-$feedback_info
-HTML;
-
+	echo elgg_view_image_block($owner_icon, $list_body, array('class' => 'elgg-feedback-entity-wrapper'));
 } else {
 	$params = array(
 		'entity' => $feedback,

@@ -19,7 +19,13 @@ $feedback->subtype = "feedback";
 $feedback->page = get_input('page');
 $feedback->mood = get_input('mood');
 $feedback->about = get_input('about');
-$feedback->id = get_input('id');
+$user = elgg_get_logged_in_user_entity();
+if ($user) {
+	$id = "$user->name ($user->email)";
+} else {
+	$id = get_input('id');
+}
+$feedback->id = $id;
 // @todo This should really use description
 $feedback->txt = get_input('description');
 $feedback->title = get_input('title');
