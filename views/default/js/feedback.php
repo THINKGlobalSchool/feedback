@@ -140,6 +140,9 @@ elgg.feedback.reset = function(e) {
 	$('a.elgg-feedback').click();
 }
 
+/**
+ * Sets the status of the feedback
+ */
 elgg.feedback.setStatus = function(e) {
 	var $this = $(this);
 	var data = {
@@ -150,9 +153,26 @@ elgg.feedback.setStatus = function(e) {
 	elgg.action('feedback/set_status', {
 		'data': data,
 		'success': function(json) {
-			// need to do something...remove it if not the old status?
+			var pageStatusID = elgg.feedback.getActiveStatusID();
+			if (pageStatusID && (pageStatusID != data.status_id)) {
+				$this.closest('.elgg-feedback-entity-wrapper').fadeOut();
+			}
 		}
 	});
+}
+
+/**
+ * Returns the status of the current
+ */
+elgg.feedback.getActiveStatusID = function() {
+	var url = window.location.href;
+	var regex = new RegExp("[\\?&]feedback_status_id=([^&#]*)");
+	
+	var results = regex.exec(url);
+	if (results) {
+		return results[1];
+	}
+	return false;
 }
 
 elgg.register_hook_handler('init', 'system', elgg.feedback.init);

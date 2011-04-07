@@ -5,7 +5,6 @@
  *
  * @package Feedback
  *
- * @todo Where to forward after changing status?
  * @todo It looks like users should be notified if they status is changed? This doesn't seem to be
  * implemented in the original plugin.
  */
@@ -211,37 +210,25 @@ function feedback_entity_menu_setup($hook, $type, $value, $params) {
 	$entity = elgg_extract('entity', $params);
 
 	if ($entity) {
-
-		$id = 'feedback-' . $entity->getGUID();
-		$content = "<label class=\"mrs\" for=\"$id\">" . elgg_echo('feedback:status') . ':</label>';
-		$content .= elgg_view('input/dropdown', array(
-			'name' => 'status',
-			'value' => $entity->status,
-			'options_values' => feedback_get_status_types(),
-			'id' => $id
-		));
 		$value[] = ElggMenuItem::factory(array(
 			'name' => 'status',
 			'href' => false,
-			'text' => $content,
+			'text' => elgg_view('feedback/admin_bar_items/status', $params),
 			'priority' => 10
 		));
 
-		$content = '<label class="mrs">' . elgg_echo('feedback:list:mood') . ':</label>';
-		$content .= elgg_echo("feedback:mood:$entity->mood");
+
 		$value[] = ElggMenuItem::factory(array(
 			'name' => 'mood',
 			'href' => false,
-			'text' => $content,
+			'text' => elgg_view('feedback/admin_bar_items/mood', $params),
 			'priority' => 20
 		));
 
-		$content = '<label class="mrs">' . elgg_echo('feedback:list:about') . ':</label>';
-		$content .= elgg_echo("feedback:about:$entity->about");
 		$value[] = ElggMenuItem::factory(array(
 			'name' => 'about',
 			'href' => false,
-			'text' => $content,
+			'text' => elgg_view('feedback/admin_bar_items/about', $params),
 			'priority' => 30
 		));
 	}
