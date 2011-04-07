@@ -16,7 +16,7 @@ $status_id = get_input('status_id');
 $feedback = get_entity($guid);
 $can_admin = feedback_can_admin_feedback($feedback);
 // returns false if can't find it
-$valid_status = feedback_get_status_friendly_name($status_id);
+$valid_status = feedback_get_friendly_status($status_id);
 
 if (elgg_instanceof($feedback, 'object', 'feedback') && $can_admin && $valid_status) {
 	if (false === ($feedback->status = $status_id)) {

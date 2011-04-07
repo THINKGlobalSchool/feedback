@@ -40,13 +40,13 @@ function feedback_get_status_id($status) {
  * @param int $status_id The status ID
  * @return string The friendy name of the ID
  */
-function feedback_get_status_friendly_name($status_id) {
+function feedback_get_friendly_status($status_id) {
 	$types = feedback_get_status_types();
 	return elgg_extract($status_id, $types, false);
 }
 
 /**
- * Returns feedback entities. Automatically grabs the status from get_input()
+ * Returns feedback entities. Automatically grabs the status from get_input() and adds breadcrumbs
  *
  * @param type $container_guid
  * @return string html to display
@@ -63,9 +63,9 @@ function feedback_list_feedback_entities($container_guid = ELGG_ENTITIES_ANY_VAL
 	$status_id = get_input('feedback_status_id', 'all');
 
 	// check invalid statuses
-	$valid_status = feedback_get_status_friendly_name($status_id);
+	$valid_status = feedback_get_friendly_status($status_id);
 
-	if ($valid_status && $status_id != 'all') {
+	if ($valid_status && $status_id != 'any') {
 		$options['metadata_name_value_pair'] = array('status' => $status_id);
 	}
 
@@ -77,6 +77,35 @@ function feedback_list_feedback_entities($container_guid = ELGG_ENTITIES_ANY_VAL
 	}
 
 	return $content;
+}
+
+/**
+ * Detects and adds the correct breadcrumb for the status id
+ *
+ * @param bool $show_link Show the link to the status?
+ * @return bool
+ */
+function feedback_push_status_breadcrumb($show_link = true) {
+	$status_id = get_input('feedback_status_id', 'any');
+
+	if ($status_id == 'any') {
+		$title = elgg_echo('feedback:status:any');
+		$query = array('feedback_status_id' => 'any');
+	} else {
+		$friendly_status = feedback_get_friendly_status($status_id);
+		if ($friendly_status) {
+			$title = $friendly_status;
+			$query = array('feedback_status_id' => $status_id);
+		}
+	}
+
+	if ($show_link) {
+		$link = elgg_http_add_url_query_elements($url, $query);
+	} else {
+		$link = null;
+	}
+
+	return elgg_push_breadcrumb($title, $link);
 }
 
 /**

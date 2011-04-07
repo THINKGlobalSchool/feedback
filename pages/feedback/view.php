@@ -6,7 +6,6 @@
  */
 
 $feedback = get_entity(get_input('guid'));
-
 $page_owner = elgg_get_page_owner_entity();
 
 $crumbs_title = $page_owner->name;

@@ -7,6 +7,8 @@
 
 $title = elgg_echo('feedback:title:all');
 
+feedback_push_status_breadcrumb(false);
+
 // show the secondary filter menu.
 $content = elgg_view_menu('feedback-status', array(
 	'sort_by' => 'priority',

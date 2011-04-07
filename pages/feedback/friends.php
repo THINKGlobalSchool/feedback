@@ -5,10 +5,18 @@
 
 
 $owner = elgg_get_page_owner_entity();
-elgg_push_breadcrumb($owner->name);
-elgg_push_breadcrumb(elgg_echo('friends'));
+elgg_push_breadcrumb($owner->name, "feedback/owner/$owner->username");
 
-$title = elgg_echo('feedback:title:friends');
+if (get_input('feedback_status_id', 'any') === 'any') {
+	$link = "feedback/friends/$owner->username";
+} else {
+	$link = null;
+}
+
+elgg_push_breadcrumb(elgg_echo('friends'), $link);
+feedback_push_status_breadcrumb(false);
+
+$title = elgg_echo('feedback:title:friends', array($owner->name));
 
 // @todo inefficient
 $friends = $owner->getFriends(null, 9999);
@@ -17,7 +25,6 @@ foreach ($friends as $friend) {
 	$friend_guids[] = $friend->getGUID();
 }
 
-var_dump($friends_guids);
 
 // show the secondary filter menu.
 $content = elgg_view_menu('feedback-status', array(
@@ -26,12 +33,17 @@ $content = elgg_view_menu('feedback-status', array(
 	'class' => 'elgg-menu-hz elgg-menu-filter elgg-menu-filter-default'
 ));
 
-// this is a bit different--We always show the full view in the lists here.
-$content .= feedback_list_feedback_entities($friend_guids, array('full_view' => true));
+if ($friend_guids) {
+	// this is a bit different--We always show the full view in the lists here.
+	$content .= feedback_list_feedback_entities($friend_guids, array('full_view' => true));
+} else {
+	$content .= elgg_view('feedback/noresults');
+}
 
 $options = array(
 	'content' => $content,
 	'title' => $title,
+	'buttons' => false,
 );
 
 $options['filter_context'] = 'friends';

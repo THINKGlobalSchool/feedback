@@ -10,6 +10,8 @@ $english = array(
 	'item:object:feedback' => 'Feedback',
 	'feedback:label' => 'Feedback',
 	'feedback:title' => 'Feedback',
+	'feedback:title:owner' => '%s\'s feedback',
+	'feedback:title:friends' => '%s\'s friends\' feedback',
 
 	'feedback:message' => 'Love it? Hate it? Want to suggest new features or report a bug? We would love to hear from you.',
 	'feedback:search_note' => 'Note: Feedback is viewable by all logged in users. Before posting, take a look at the '
@@ -55,7 +57,7 @@ $english = array(
 	'feedback:mood:happy' => 'Happy',
 
 	'feedback:status' => 'Status',
-	'feedback:status:any' => 'Any',
+	'feedback:status:any' => 'Any status',
 	'feedback:status:submitted' => 'Submitted',
 	'feedback:status:acknowledged' => 'Acknowledged',
 	'feedback:status:resolvedaction' => 'Resolved with Action',

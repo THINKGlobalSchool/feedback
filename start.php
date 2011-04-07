@@ -8,7 +8,6 @@
  * @todo Where to forward after changing status?
  * @todo It looks like users should be notified if they status is changed? This doesn't seem to be
  * implemented in the original plugin.
- * @todo Check breadcrumbs and contexts
  */
 
 elgg_register_event_handler('init','system','feedback_init');
@@ -38,12 +37,13 @@ function feedback_init() {
 	// Add menus
 	
 	// secondary filter menu
-	// always have all
+	$status_id = get_input('feedback_status_id', 'any');
+	// always have any
 	elgg_register_menu_item('feedback-status', array(
 		'name' => 'any',
 		'text' => elgg_echo("feedback:status:any"),
 		'href' => '/feedback',
-		'selected' => (get_input('feedback_status', 'any') != 'any'),
+		'selected' => ($status_id === 'any'),
 		'priority' => 1
 	));
 	
@@ -54,7 +54,7 @@ function feedback_init() {
 			'name' => $id,
 			'text' => $status,
 			'href' => elgg_http_add_url_query_elements(current_page_url(), array('feedback_status_id' => $id)),
-			'selected' => (get_input('feedback_status_id', 'any') == $id),
+			'selected' => ($status_id === $id),
 			'priority' => $i
 		));
 		
@@ -126,6 +126,7 @@ function feedback_page_handler($page) {
 		$page[0] = 'all';
 	}
 
+	elgg_push_context('feedback');
 	$pages = dirname(__FILE__) . '/pages/feedback';
 	
 	switch ($page[0]) {
@@ -148,6 +149,8 @@ function feedback_page_handler($page) {
 			include("$pages/all.php");
 			break;
 	}
+
+	elgg_pop_context();
 	
 	return true;
 }
