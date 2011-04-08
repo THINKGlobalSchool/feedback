@@ -70,7 +70,7 @@ function feedback_init() {
 	elgg_register_entity_url_handler('object', 'feedback', 'feedback_url');
 
 	// Register actions
-	$action_base = dirname(__FILE__) . '/actions/feedback';
+	$action_base = elgg_get_plugins_path() . 'feedback/actions/feedback';
 
 	if (elgg_get_plugin_setting('disablepublic', 'feedback') === 1) {
 		$access = 'logged_in';
@@ -262,7 +262,7 @@ function feedback_customize_entity_menu($hook, $type, $return, $params) {
 				'name' => 'delete',
 				'text' => elgg_view_icon('delete'),
 				'title' => elgg_echo('delete:this'),
-				'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+				'href' => "action/{$params['handler']}/delete?guid={$entity->getGUID()}",
 				'confirm' => elgg_echo('deleteconfirm'),
 				'priority' => 300,
 			);
