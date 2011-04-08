@@ -11,8 +11,8 @@
  */
 
 // Determine if we're hiding the feedback button from the 'public' (only logged in users)
-$hide_from_public = (elgg_get_plugin_setting('disablepublic', 'feedback') === 1);
-if (!elgg_is_logged_in() && $hide_from_public) {
+//$hide_from_public = (elgg_get_plugin_setting('disablepublic', 'feedback') === 1);
+if (!elgg_is_logged_in()) {
 	return true;
 }
 
