@@ -11,7 +11,7 @@
 
 	<requires>
 		<type>elgg_version</type>
-		<version>2009030802</version>
+		<version>2011032200</version>
 	</requires>
 
 	<category>Utilities</category>
