@@ -14,6 +14,7 @@
 		<version>2011032200</version>
 	</requires>
 
-	<category>Utilities</category>
+	<category>enhancement</category>
+	<category>tgs</category>
 	<admin_interface>simple</admin_interface>
 </plugin_manifest>
