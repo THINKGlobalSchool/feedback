@@ -69,7 +69,7 @@ HTML;
 		'content' => $content
 	);
 
-	$list_body = elgg_view('page/components/summary', $params);
+	$list_body = elgg_view('object/elements/summary', $params);
 	echo elgg_view_image_block($owner_icon, $list_body, array('class' => 'elgg-feedback-entity-wrapper'));
 } else {
 	$params = array(
@@ -79,7 +79,7 @@ HTML;
 		'tags' => $tags,
 	);
 
-	$body = elgg_view('page/components/summary', $params);
+	$body = elgg_view('object/elements/summary', $params);
 	$body .= 'this aowhefioawehf';
 	
 	echo elgg_view_image_block($owner_icon, $body);
