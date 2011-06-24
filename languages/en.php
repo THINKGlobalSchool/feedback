@@ -87,9 +87,8 @@ $english = array(
 	'feedback:email:updatedsubject' => "Your feedback has been updated!",
 	'feedback:email:updatedbody' => 'Your feedback has been updated, check out your feedback here: %s',
 	
-	'feedback:river:create' => 'added feedback titled %s',
-	'feedback:river:update' => 'updated feedback titled %s',
-	'feedback:river:posted' => "%s posted a comment on",
+	'river:create:object:feedback' => '%s added feedback titled %s',
+	'river:update:object:feedback' => '%s updated feedback titled %s',
 
 	'river:commented:object:feedback' => 'feedback',
 	

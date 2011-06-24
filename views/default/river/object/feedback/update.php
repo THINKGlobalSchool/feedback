@@ -10,6 +10,4 @@
  * 
  */
 
-// pass through create with a different text.
-$vars['text_key'] = 'feedback:river:update';
 echo elgg_view('river/object/feedback/create', $vars);
