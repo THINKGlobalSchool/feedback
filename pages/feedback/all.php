@@ -23,7 +23,6 @@ $body .= elgg_view_layout('content', array(
 	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
-	'buttons' => false,
 ));
 
 echo elgg_view_page($title, $body);

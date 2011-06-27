@@ -43,7 +43,6 @@ if ($friend_guids) {
 $options = array(
 	'content' => $content,
 	'title' => $title,
-	'buttons' => false,
 );
 
 $options['filter_context'] = 'friends';

@@ -28,7 +28,6 @@ $content .= feedback_list_feedback_entities($owner->getGUID(), array('full_view'
 $options = array(
 	'content' => $content,
 	'title' => $title,
-	'buttons' => false,
 );
 
 if ($owner->getGUID() == elgg_get_logged_in_user_guid()) {
