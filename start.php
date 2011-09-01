@@ -29,8 +29,12 @@ function feedback_init() {
 	// the page/elements/footer is now inside the layout
 	elgg_extend_view('footer/analytics', 'feedback/feedback');
 
-	// extend the site CSS and js
-	elgg_extend_view('css/elgg', 'feedback/css');
+	// Register Feedback CSS
+	$f_css = elgg_get_simplecache_url('css', 'feedback/css');
+	elgg_register_css('elgg.feedback', $f_css);
+	elgg_load_css('elgg.feedback');
+	
+	// Extend main JS
 	elgg_extend_view('js/elgg', 'js/feedback');
 
 	// Add menus

@@ -28,7 +28,8 @@ $comments_active = ($comments_open) ? 'elgg-state-active' : '';
 $comments_link = elgg_view('output/url', array(
 	'href' => '#comments-' . $feedback->getGUID(),
 	'text' => $text,
-	'class' => "elgg-toggler $comments_active"
+	'class' => "$comments_active",
+	'rel' => 'toggle',
 ));
 
 // gotta wrap this in an extra div for the animation.
