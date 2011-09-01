@@ -15,7 +15,7 @@
 
 a.elgg-feedback {
 	position: fixed;
-	top: 125px;
+	top: 175px;
 	left: 0px;
 	z-index:1;
 	background-image: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_sprite.png);

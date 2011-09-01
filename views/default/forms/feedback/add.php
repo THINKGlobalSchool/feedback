@@ -120,7 +120,7 @@ $cancel = elgg_view('input/reset', array(
 echo <<<___HTML
 	$message
 
-	<label class="prm left">$mood_label:</label>
+	<label class="prm left">$mood_label:</label><br />
 	$mood
 	<div class="clearfloat"></div>
 
