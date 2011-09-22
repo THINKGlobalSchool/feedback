@@ -92,6 +92,8 @@ $english = array(
 
 	'river:commented:object:feedback' => 'feedback',
 	
+	'river:comment:object:feedback' => '%s commented on the feedback %s',
+	
 	/* Spiced up text for the river */
 	// @todo I don't think this shows up anywhere now.
 	'feedback:river:comment:like' => "%s is feelin' the feedback titled %s",
