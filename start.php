@@ -31,6 +31,7 @@ function feedback_init() {
 
 	// Register Feedback CSS
 	$f_css = elgg_get_simplecache_url('css', 'feedback/css');
+	elgg_register_simplecache_view('css/feedback/css');
 	elgg_register_css('elgg.feedback', $f_css);
 	elgg_load_css('elgg.feedback');
 	
