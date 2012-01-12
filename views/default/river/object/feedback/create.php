@@ -13,7 +13,7 @@
 $object = $vars['item']->getObjectEntity();
 $excerpt = strip_tags($object->txt);
 
-echo elgg_view('river/item', array(
+echo elgg_view('river/elements/layout', array(
 	'item' => $vars['item'],
 	'message' => $excerpt,
 ));
