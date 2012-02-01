@@ -176,5 +176,3 @@ elgg.feedback.getActiveStatusID = function() {
 }
 
 elgg.register_hook_handler('init', 'system', elgg.feedback.init);
-
-//</script>

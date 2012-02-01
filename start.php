@@ -69,7 +69,7 @@ function feedback_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:feedback-admin', 'feedback_entity_menu_setup');
 
 	// remove edit, add delete for authorized users
-	elgg_register_plugin_hook_handler('prepare', 'menu:entity', 'feedback_customize_entity_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'feedback_customize_entity_menu');
 
 	// Set up url handler
 	elgg_register_entity_url_handler('object', 'feedback', 'feedback_url');
@@ -254,10 +254,10 @@ function feedback_customize_entity_menu($hook, $type, $return, $params) {
 
 	// don't display edit link for polls
 	if (elgg_instanceof($entity, 'object', 'feedback')) {
-		foreach ($return['default'] as $i => $menu) {
+		foreach ($return as $i => $menu) {
 			// remove both, but add delete after
 			if ($menu->getName() == 'edit' || $menu->getName() == 'delete') {
-				unset ($return['default'][$i]);
+				unset ($return[$i]);
 			}
 		}
 
@@ -272,7 +272,7 @@ function feedback_customize_entity_menu($hook, $type, $return, $params) {
 				'priority' => 300,
 			);
 
-			$return['default'][] = ElggMenuItem::factory($options);
+			$return[] = ElggMenuItem::factory($options);
 		}
 	}
 
