@@ -32,7 +32,7 @@ a.elgg-feedback span {
 	display: none;
 }
 
-.elgg-feedback-wrapper {
+#elgg-feedback-wrapper {
 	width: 400px;
 	position: fixed;
 	/* Required for jquery bug http://bugs.jquery.com/ticket/8316 */
@@ -40,11 +40,11 @@ a.elgg-feedback span {
 	left: -1000px;
 }
 
-.elgg-feedback-wrapper textarea {
+#elgg-feedback-wrapper textarea {
 	height: 75px;
 }
 
-.elgg-feedback-wrapper .elgg-ajax-loader {
+#elgg-feedback-wrapper .elgg-ajax-loader {
 	display: block;
 	vertical-align: middle;
 	height: 100%;
@@ -70,19 +70,6 @@ a.elgg-feedback span {
 .elgg-menu-feedback-admin li {
 	display: inline;
 	margin-right: 90px;
-}
-
-.elgg-feedback-wrapper-old {
-	width: 400px;
-	overflow: hidden;
-	position: absolute;
-	left: -1000;
-	float: left;
-	border: solid #ccc 1px;
-	background-color: #eeeeee;
-	box-shadow: 5px 5px 13px #333;
-	-moz-box-shadow: 5px 5px 13px #333;
-	-webkit-box-shadow: 5px 5px 13px #333;
 }
 
 .open {

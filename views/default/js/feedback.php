@@ -11,8 +11,8 @@ elgg.feedback.init = function() {
 	elgg.register_hook_handler('getOptions', 'ui.popup', elgg.feedback.popupSetup);
 
 	// form buttons
-	$('.elgg-feedback-wrapper input[type=submit]').live('click', elgg.feedback.submit);
-	$('.elgg-feedback-wrapper input[type=reset]').live('click', elgg.feedback.reset);
+	$('#elgg-feedback-wrapper input[type=submit]').live('click', elgg.feedback.submit);
+	$('#elgg-feedback-wrapper input[type=reset]').live('click', elgg.feedback.reset);
 
 	// store default values, clear on focus, restore on blur
 	elgg.feedback.setDefaultValues();
@@ -45,7 +45,7 @@ elgg.feedback.setDefaultValues = function() {
  * This overrides the default popup.
  */
 elgg.feedback.popupSetup = function(hook, type, params, options) {
-	if (params.targetSelector == '.elgg-feedback-wrapper') {
+	if (params.targetSelector == '#elgg-feedback-wrapper') {
 		var $target = params.target;
 		
 		// hide if already open

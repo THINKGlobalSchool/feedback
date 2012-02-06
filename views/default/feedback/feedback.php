@@ -26,7 +26,7 @@ $progress_img = '<img src="' . elgg_get_site_url() . 'mod/feedback/graphics/ajax
 // the side link
 $feedback = elgg_echo('feedback');
 $link = elgg_view('output/url', array(
-	'href' => '#.elgg-feedback-wrapper',
+	'href' => '#elgg-feedback-wrapper',
 	'text' => "<span>$feedback</span>",
 	'rel' => 'popup',
 	'class' => 'elgg-feedback'
@@ -43,7 +43,8 @@ $all_feedback = elgg_view('output/url', array(
 $title = elgg_echo('feedback:title') . "<span class=\"right small\">$all_feedback</span>";
 $body = elgg_view_form('feedback/add');
 $options = array(
-	'class' => 'elgg-feedback-wrapper hidden'
+	'id' => 'elgg-feedback-wrapper',
+	'class' => 'hidden'
 );
 
 echo elgg_view_module('popup', $title, $body, $options);
