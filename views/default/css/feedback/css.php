@@ -136,10 +136,6 @@ form#updatestatus {
 	width: 100% !important;
 }
 
-table.mceLayout {
-	width: 100% !important;
-}
-
 #feedbackvote {
 	display: block; 
 	height: 35px;'>
