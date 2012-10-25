@@ -50,14 +50,6 @@ a.elgg-feedback span {
 	height: 100%;
 }
 
-.elgg-feedback-entity-wrapper .elgg-toggler:after{
-	content: '↓';
-}
-
-.elgg-feedback-entity-wrapper .elgg-state-active:after{
-	content: '↑';
-}
-
 .elgg-menu-feedback-admin {
 	border: 1px solid #ccc;
 	background: #eee;
