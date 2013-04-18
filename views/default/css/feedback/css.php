@@ -13,6 +13,21 @@
 
 ?>
 
+/** iPhone/iPad Rules **/
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+  a.elgg-feedback { display: none !important; } /* css rules for ipad portrait */
+}
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape) {
+  a.elgg-feedback { display: none !important; } /* css rules for ipad landscape */
+}
+@media all and (max-device-width: 480px) and (orientation:portrait) {
+  a.elgg-feedback { display: none !important; } /* css rules for ipad portrait */
+}
+@media all and (max-device-width: 480px) and (orientation:landscape) {
+  a.elgg-feedback { display: none !important; } /* css rules for ipad landscape */
+}
+
+
 a.elgg-feedback {
 	position: fixed;
 	top: 175px;
