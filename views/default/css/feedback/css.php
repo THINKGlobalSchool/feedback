@@ -22,6 +22,7 @@ a.elgg-feedback {
 	height: 117px;
 	width: 34px;
 	background-position: -34px 0px;
+	display: none;
 }
 
 a.elgg-feedback.elgg-state-active {

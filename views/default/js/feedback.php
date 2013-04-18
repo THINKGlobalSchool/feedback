@@ -19,6 +19,29 @@ elgg.feedback.init = function() {
 
 	// set status for admin control panel
 	$('.elgg-feedback-entity-wrapper select').live('change', elgg.feedback.setStatus);
+
+	// Make the feedback tab draggable
+	$('.elgg-feedback').draggable({
+		axis: "y",
+		// Contained between the bottom of the topbar and the footer
+		containment: [
+			0,
+			$('.elgg-page-topbar').position().top + $('.elgg-page-topbar').height(),
+			0,
+			$('.elgg-page-footer').position().top
+		],
+		stop: elgg.feedback.dragStop
+	});
+
+	// reposition the feedback tab if a position exists in local storage
+	var top = localStorage.getItem('elgg.feedback.position.top');
+	if (top) {
+		$('.elgg-feedback').css({'top': top + 'px'});
+	}
+
+	// fade in feedback
+	$('.elgg-feedback').fadeIn();
+
 }
 
 /**
@@ -173,6 +196,26 @@ elgg.feedback.getActiveStatusID = function() {
 		return results[1];
 	}
 	return false;
+}
+
+/**	
+ * Helper to check for local storage support
+ */
+elgg.feedback.supportsLocalStorage = function() {
+	try {
+		return 'localStorage' in window && window['localStorage'] !== null;
+	} catch (e) {
+		return false;
+	}
+}
+
+
+/**
+ * Save the location of the feedback tab in local storage when dragging is stopped
+ */
+elgg.feedback.dragStop = function(event, ui) {
+	// Store position
+	localStorage.setItem('elgg.feedback.position.top', $(this).position().top);
 }
 
 elgg.register_hook_handler('init', 'system', elgg.feedback.init);
