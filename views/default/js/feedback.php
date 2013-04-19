@@ -20,18 +20,21 @@ elgg.feedback.init = function() {
 	// set status for admin control panel
 	$('.elgg-feedback-entity-wrapper select').live('change', elgg.feedback.setStatus);
 
-	// Make the feedback tab draggable
-	$('.elgg-feedback').draggable({
-		axis: "y",
-		// Contained between the bottom of the topbar and the footer
-		containment: [
-			0,
-			$('.elgg-page-topbar').position().top + $('.elgg-page-topbar').height(),
-			0,
-			$('.elgg-page-footer').position().top
-		],
-		stop: elgg.feedback.dragStop
-	});
+	// Make sure we're logged in
+	if (elgg.is_logged_in()) {
+		// Make the feedback tab draggable
+		$('.elgg-feedback').draggable({
+			axis: "y",
+			// Contained between the bottom of the topbar and the footer
+			containment: [
+				0,
+				$('.elgg-page-topbar').position().top + $('.elgg-page-topbar').height(),
+				0,
+				$('.elgg-page-footer').position().top
+			],
+			stop: elgg.feedback.dragStop
+		});
+	}
 
 	// reposition the feedback tab if a position exists in local storage
 	var top = localStorage.getItem('elgg.feedback.position.top');
