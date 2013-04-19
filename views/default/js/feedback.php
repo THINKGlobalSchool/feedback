@@ -20,8 +20,8 @@ elgg.feedback.init = function() {
 	// set status for admin control panel
 	$('.elgg-feedback-entity-wrapper select').live('change', elgg.feedback.setStatus);
 
-	// Make sure we're logged in
-	if (elgg.is_logged_in()) {
+	// Make sure we're logged in, and the topbar exists
+	if (elgg.is_logged_in() && $('.elgg-page-topbar').length) {
 		// Make the feedback tab draggable
 		$('.elgg-feedback').draggable({
 			axis: "y",
