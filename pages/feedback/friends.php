@@ -25,13 +25,8 @@ foreach ($friends as $friend) {
 	$friend_guids[] = $friend->getGUID();
 }
 
-
-// show the secondary filter menu.
-$content = elgg_view_menu('feedback-status', array(
-	'sort_by' => 'priority',
-	// recycle the menu filter css
-	'class' => 'elgg-menu-hz elgg-menu-filter elgg-menu-filter-default'
-));
+// show the status filter menu.
+$content = elgg_view('feedback/status_filter');
 
 if ($friend_guids) {
 	// this is a bit different--We always show the full view in the lists here.

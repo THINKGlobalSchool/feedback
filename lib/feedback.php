@@ -56,7 +56,7 @@ function feedback_list_feedback_entities($container_guid = ELGG_ENTITIES_ANY_VAL
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'feedback',
-		'limit' => $limit,
+		'limit' => '20',
 		'container_guid' => $container_guid
 	);
 

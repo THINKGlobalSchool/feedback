@@ -25,45 +25,16 @@ function feedback_init() {
 	// page handler        
 	elgg_register_page_handler('feedback', 'feedback_page_handler');
           
-	// extend the analytics view.. seems to be the only working place as 
-	// the page/elements/footer is now inside the layout
-	elgg_extend_view('footer/analytics', 'feedback/feedback');
+	// extend the footer view.. seems to be the only working place as 
+	elgg_extend_view('page/elements/foot', 'feedback/feedback');
 
 	// Register Feedback CSS
 	$f_css = elgg_get_simplecache_url('css', 'feedback/css');
-	elgg_register_simplecache_view('css/feedback/css');
 	elgg_register_css('elgg.feedback', $f_css);
 	elgg_load_css('elgg.feedback');
 	
 	// Extend main JS
 	elgg_extend_view('js/elgg', 'js/feedback');
-
-	// Add menus
-	
-	// secondary filter menu
-	$status_id = get_input('feedback_status_id', 'any');
-	// always have any
-	elgg_register_menu_item('feedback-status', array(
-		'name' => 'any',
-		'text' => elgg_echo("feedback:status:any"),
-		'href' => '/feedback',
-		'selected' => ($status_id === 'any'),
-		'priority' => 1
-	));
-	
-	$statuses = feedback_get_status_types();
-	$i = 2;
-	foreach ($statuses as $id => $status) {
-		elgg_register_menu_item('feedback-status', array(
-			'name' => $id,
-			'text' => $status,
-			'href' => elgg_http_add_url_query_elements(current_page_url(), array('feedback_status_id' => $id)),
-			'selected' => ($status_id === $id),
-			'priority' => $i
-		));
-		
-		$i++;
-	}
 
 	// the status, mood, about menu on the full view
 	elgg_register_plugin_hook_handler('register', 'menu:feedback-admin', 'feedback_entity_menu_setup');

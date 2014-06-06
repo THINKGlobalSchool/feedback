@@ -10,9 +10,8 @@
  * @copyright Prashant Juvekar
  * @link http://www.linkedin.com/in/prashantjuvekar
  */
-
 ?>
-
+/** <style> /**/
 /** iPhone/iPad Rules **/
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
   a.elgg-feedback { display: none !important; } /* css rules for ipad portrait */
@@ -33,7 +32,7 @@ a.elgg-feedback {
 	top: 175px;
 	left: 0px;
 	z-index:1;
-	background-image: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_sprite.png);
+	background-image: url('<?php echo elgg_get_site_url(); ?>mod/feedback/graphics/feedback_sprite.png');
 	height: 117px;
 	width: 34px;
 	background-position: -34px 0px;
@@ -217,13 +216,13 @@ form#updatestatus {
 
 /* River */
 .river_object_feedback_create {
-	background: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_river.gif) no-repeat left -1px;
+	background: url('<?php echo elgg_get_site_url(); ?>mod/feedback/graphics/feedback_river.gif') no-repeat left -1px;
 }
 
 .river_object_feedback_update {
-	background: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_river.gif) no-repeat left -1px;
+	background: url('<?php echo elgg_get_site_url(); ?>mod/feedback/graphics/feedback_river.gif') no-repeat left -1px;
 }
 .river_object_feedback_comment {
-	background: url(<?php echo $vars['url']; ?>mod/feedback/graphics/feedback_river.gif) no-repeat left -1px;
+	background: url('<?php echo elgg_get_site_url(); ?>mod/feedback/graphics/feedback_river.gif') no-repeat left -1px;
 }
 

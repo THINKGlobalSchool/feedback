@@ -11,14 +11,17 @@ elgg.feedback.init = function() {
 	elgg.register_hook_handler('getOptions', 'ui.popup', elgg.feedback.popupSetup);
 
 	// form buttons
-	$('#elgg-feedback-wrapper input[type=submit]').live('click', elgg.feedback.submit);
-	$('#elgg-feedback-wrapper input[type=reset]').live('click', elgg.feedback.reset);
+	$(document).on('click', '#elgg-feedback-wrapper input[type=submit]', elgg.feedback.submit);
+	$(document).on('click', '#elgg-feedback-wrapper input[type=reset]', elgg.feedback.reset);
+
+	// set status for admin control panel
+	$(document).on('change', '.elgg-feedback-entity-wrapper select', elgg.feedback.setStatus);
+
+	// delegate the status filter 
+	$(document).on('change', '#feedback-status-filter', elgg.feedback.statusFilterChange);
 
 	// store default values, clear on focus, restore on blur
 	elgg.feedback.setDefaultValues();
-
-	// set status for admin control panel
-	$('.elgg-feedback-entity-wrapper select').live('change', elgg.feedback.setStatus);
 
 	// If we have a feedback tab
 	if ($('.elgg-feedback').length && $('.elgg-page-topbar').length) {
@@ -185,6 +188,23 @@ elgg.feedback.setStatus = function(e) {
 			}
 		}
 	});
+}
+
+/**
+ * Handle status filter change
+ */
+elgg.feedback.statusFilterChange = function(e) {
+	if (document.URL.indexOf('?') != -1) {
+		var base_url = document.URL.substring(0, document.URL.indexOf('?'));	
+	} else {
+		var base_url = document.URL;
+	}
+
+	if ($(this).val() != 'any') {
+		window.location.href = base_url + '?feedback_status_id=' + $(this).val();
+	} else {
+		window.location.href = base_url;
+	}
 }
 
 /**

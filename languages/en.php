@@ -5,7 +5,7 @@
  * @package Feedback
  */
 
-$english = array(
+return array(
 
 	'item:object:feedback' => 'Feedback',
 	'feedback:label' => 'Feedback',
@@ -57,7 +57,7 @@ $english = array(
 	'feedback:mood:happy' => 'Happy',
 
 	'feedback:status' => 'Status',
-	'feedback:status:any' => 'Any status',
+	'feedback:status:any' => 'Any',
 	'feedback:status:submitted' => 'Submitted',
 	'feedback:status:acknowledged' => 'Acknowledged',
 	'feedback:status:resolvedaction' => 'Resolved with Action',
@@ -110,5 +110,3 @@ $english = array(
 	'feedback:settings:riverdisplay' => 'Show new feedback and updates on river',
 	'feedback:settings:admin_users' => 'Usernames listed here will be able to change the status of or delete feedback.',
 );
-				
-add_translation("en", $english);
