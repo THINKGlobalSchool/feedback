@@ -1,4 +1,4 @@
 <?php
 
-echo $vars['url'] . "mod/feedback/graphics/feedback.png";
+echo elgg_normalize_url("mod/feedback/graphics/feedback.png");
 	
