@@ -14,7 +14,7 @@ $english = array(
 	'feedback:title:friends' => '%s\'s friends\' feedback',
 
 	'feedback:message' => 'Love it? Hate it? Want to suggest new features or report a bug? We would love to hear from you.',
-	'feedback:search_note' => 'Note: Feedback is viewable by all logged in users. Before posting, take a look at the '
+	'feedback:search_note' => 'Note: Feedback is viewable by all logged-in users. Before posting, take a look at the '
 		. '<a href="%s">feedback</a> that has already been posted to prevent duplicate issues/suggestions.',
 	
 	'feedback:default:id' => 'Name and/or Email',
@@ -106,7 +106,7 @@ $english = array(
 	
 	'feedback:strapline' => 'From %s %s',
 	
-	'feedback:settings:disablepublic' => 'Visible to only logged in users', 
+	'feedback:settings:disablepublic' => 'Visible to only logged-in users', 
 	'feedback:settings:riverdisplay' => 'Show new feedback and updates on river',
 	'feedback:settings:admin_users' => 'Usernames listed here will be able to change the status of or delete feedback.',
 );
