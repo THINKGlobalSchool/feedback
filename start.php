@@ -43,7 +43,7 @@ function feedback_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'feedback_customize_entity_menu');
 
 	// Set up url handler
-	elgg_register_entity_url_handler('object', 'feedback', 'feedback_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'feedback_url');
 
 	// Register actions
 	$action_base = elgg_get_plugins_path() . 'feedback/actions/feedback';
@@ -68,14 +68,24 @@ function feedback_init() {
 }
 
 /**
- * Populates the ->getUrl() method for feedback
+ * Returns the URL from a feedback entity
  *
- * @param ElggEntity entity
- * @return string url
+ * @param string $hook   'entity:url'
+ * @param string $type   'object'
+ * @param string $url    The current URL
+ * @param array  $params Hook parameters
+ * @return string
  */
-function feedback_url($entity) {
+function feedback_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+
+	// Check that the entity is a feedback object
+	if (!elgg_instanceof($entity, 'object', 'feedback')) {
+		return;
+	}
+
 	$title = elgg_get_friendly_title($entity->title);
-	return elgg_get_site_url() . "feedback/view/{$entity->guid}/$title";
+	return "feedback/view/{$entity->guid}/$title";
 }
 
 /**

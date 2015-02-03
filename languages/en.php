@@ -6,7 +6,6 @@
  */
 
 return array(
-
 	'item:object:feedback' => 'Feedback',
 	'feedback:label' => 'Feedback',
 	'feedback:title' => 'Feedback',
