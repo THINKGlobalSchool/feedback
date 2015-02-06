@@ -32,19 +32,39 @@ a.elgg-feedback {
 	top: 175px;
 	left: 0px;
 	z-index:1;
-	background-image: url('<?php echo elgg_get_site_url(); ?>mod/feedback/graphics/feedback_sprite.png');
 	height: 117px;
 	width: 34px;
 	background-position: -34px 0px;
+	background-color: #424242;
+	box-shadow: 0px 0px 6px #333333;
 	display: none;
 }
 
 a.elgg-feedback.elgg-state-active {
-	background-position: 0px 0px;
+
 }
 
 a.elgg-feedback span {
-	display: none;
+	position: relative;
+	text-transform: uppercase;
+	top: 65%;
+	display: block;
+	color: #FFFFFF;
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+
+	/* also accepts left, right, top, bottom coordinates; not required, but a good idea for styling */
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-ms-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+	transform-origin: 50% 50%;
+
+	/* Should be unset in IE9+ I think. */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
 #elgg-feedback-wrapper {
@@ -53,6 +73,11 @@ a.elgg-feedback span {
 	/* Required for jquery bug http://bugs.jquery.com/ticket/8316 */
 	top: 125px;
 	left: -1000px;
+}
+
+#elgg-feedback-wrapper h3 > span {
+	float: right;
+	font-size: 0.8em;
 }
 
 #elgg-feedback-wrapper textarea {
@@ -213,16 +238,3 @@ form#updatestatus {
 	-moz-border-radius:5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;
 }
-
-/* River */
-.river_object_feedback_create {
-	background: url('<?php echo elgg_get_site_url(); ?>mod/feedback/graphics/feedback_river.gif') no-repeat left -1px;
-}
-
-.river_object_feedback_update {
-	background: url('<?php echo elgg_get_site_url(); ?>mod/feedback/graphics/feedback_river.gif') no-repeat left -1px;
-}
-.river_object_feedback_comment {
-	background: url('<?php echo elgg_get_site_url(); ?>mod/feedback/graphics/feedback_river.gif') no-repeat left -1px;
-}
-

@@ -46,8 +46,7 @@ elgg.feedback.init = function() {
 	}
 
 	// fade in feedback
-	$('.elgg-feedback').fadeIn();
-
+	$('.elgg-feedback').fadeIn().css("display","inline-block");
 }
 
 /**
@@ -76,18 +75,21 @@ elgg.feedback.setDefaultValues = function() {
 elgg.feedback.popupSetup = function(hook, type, params, options) {
 	if (params.targetSelector == '#elgg-feedback-wrapper') {
 		var $target = params.target;
-		
+
 		// hide if already open
 		if ($target.is(':visible')) {
-			$target.hide('slide', {direction: 'left'}, 200)
+			$target.fadeOut('fast');
+			$('.elgg-feedback span').html(elgg.echo('feedback') + "&nbsp;&#x25BC;");
 			return;
 		}
+
+		$('.elgg-feedback span').html(elgg.echo('feedback') + "&nbsp;&#x25B2;");
 
 		// add padding the width of the popper
 		var posL = params.source.outerWidth();
 
 		options.my = 'left top';
-		options.at = 'left top';
+		options.at = 'right top';
 		options.collision = 'none';
 		options.offset = posL + ' 0';
 
@@ -96,8 +98,7 @@ elgg.feedback.popupSetup = function(hook, type, params, options) {
 		$target
 			.css('margin-left', posL + 'px')
 			.css('display', 'block')
-			.position(options)
-			.show('slide', {direction: 'left'}, 200);
+			.position(options);
 
 		return false;
 	}

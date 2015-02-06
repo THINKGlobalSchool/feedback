@@ -20,11 +20,9 @@ if (!elgg_is_logged_in()) {
 if (elgg_in_context('admin')) {
 	return true;
 }
- 
-$progress_img = '<img src="' . elgg_get_site_url() . 'mod/feedback/graphics/ajax-loader-bar.gif" alt="' . elgg_echo('feedback:submit_msg').'" />';
 
 // the side link
-$feedback = elgg_echo('feedback');
+$feedback = elgg_echo('feedback') . "&nbsp;&#x25BC;";
 $link = elgg_view('output/url', array(
 	'href' => '#elgg-feedback-wrapper',
 	'text' => "<span>$feedback</span>",
